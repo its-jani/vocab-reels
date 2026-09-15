@@ -1,0 +1,6 @@
+{
+  "name": "Vocab Reels",
+  "description": "Mobile-first vocabulary learning application with TikTok-style infinite scroll, text-to-speech pronunciation, category and difficulty filters, and local persistence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
