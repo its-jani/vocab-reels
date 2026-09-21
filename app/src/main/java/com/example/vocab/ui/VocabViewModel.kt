@@ -109,6 +109,12 @@ class VocabViewModel(application: Application) : AndroidViewModel(application) {
                 if (list.isNotEmpty()) {
                     _isInitialLoading.value = false
                 }
+                latestWords = list
+                val ids = list.map { it.id }
+                if (ids != lastFeedWordIds) {
+                    lastFeedWordIds = ids
+                    buildOrderedFeed()
+                }
             }
         }
     }
@@ -232,61 +238,74 @@ class VocabViewModel(application: Application) : AndroidViewModel(application) {
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    // Randomization Engine
-    val filteredWords: StateFlow<List<VocabWord>> = combine(
-        allWords,
-        _selectedCategory,
-        _selectedDifficulty,
-        _shuffleSeed
-    ) { words: List<VocabWord>, category: String, difficulty: String, seed: Long ->
-        if (words.isEmpty()) return@combine emptyList<VocabWord>()
+    // Confidence-driven feed. Order is a snapshot built on category/difficulty/seed
+// changes or word-set membership changes, so rating a word in-session does NOT
+// reorder the list under the swiping thumb. Ratings shape the next feed build.
+private val _filteredWords = MutableStateFlow<List<VocabWord>>(emptyList())
+val filteredWords: StateFlow<List<VocabWord>> = _filteredWords.asStateFlow()
 
-        val candidates = words.filter { word ->
-            val matchesCategory = when (category) {
-                VocabCategories.ALL -> true
-                VocabCategories.OXFORD_DICTIONARY -> word.category == VocabCategories.OXFORD_DICTIONARY || word.category == VocabCategories.GENERAL_ENGLISH
-                else -> word.category == category
-            }
-            val matchesDifficulty = (difficulty == "All Levels") || word.difficulty.equals(difficulty, ignoreCase = true)
-            matchesCategory && matchesDifficulty
+private var latestWords: List<VocabWord> = emptyList()
+private var lastFeedWordIds: List<Long>? = null
+
+// ponytail: confidence sort is bucket-level, no SRS intervals. Add spaced
+// repetition (due dates per rating) if review scheduling becomes a product goal.
+private fun orderFeed(
+    words: List<VocabWord>,
+    category: String,
+    difficulty: String,
+    seed: Long
+): List<VocabWord> {
+    if (words.isEmpty()) return emptyList()
+
+    val candidates = words.filter { word ->
+        val matchesCategory = when (category) {
+            VocabCategories.ALL -> true
+            VocabCategories.OXFORD_DICTIONARY -> word.category == VocabCategories.OXFORD_DICTIONARY || word.category == VocabCategories.GENERAL_ENGLISH
+            else -> word.category == category
+        }
+        val matchesDifficulty = (difficulty == "All Levels") || word.difficulty.equals(difficulty, ignoreCase = true)
+        matchesCategory && matchesDifficulty
+    }
+    if (candidates.isEmpty()) return emptyList()
+
+    val rng = java.util.Random(seed)
+    // Lowest confidence first: unrated/weak words surface early each cycle,
+    // "Mastered" words fall toward the back. Stable id tiebreak + seeded shuffle
+    // within a bucket keep the order independent of live review-state writes.
+    return if (category == VocabCategories.ALL) {
+        val grouped = candidates.groupBy { it.category }
+        val wordsByCat = grouped.mapValues { (_, list) ->
+            list.sortedWith(compareBy<VocabWord> { it.confidenceRating }.thenBy { it.id })
+                .shuffled(rng)
+                .toMutableList()
         }
 
-        if (candidates.isEmpty()) return@combine emptyList<VocabWord>()
-
-        val rng = java.util.Random(seed)
-
-        if (category == VocabCategories.ALL) {
-            // Group candidate words by category to interleave in round-robin fashion
-            val grouped = candidates.groupBy { it.category }
-            // Keep order independent of mutable review state so Room updates do not move the pager.
-            val wordsByCat = grouped.mapValues { (_, list) ->
-                list.shuffled(rng).toMutableList()
-            }
-
-            val result = mutableListOf<VocabWord>()
-
-            val cats = grouped.keys.shuffled(rng)
-            var added = true
-            while (added) {
-                added = false
-                for (cat in cats) {
-                    val list = wordsByCat[cat]
-                    if (list != null && list.isNotEmpty()) {
-                        result.add(list.removeAt(0))
-                        added = true
-                    }
+        val result = mutableListOf<VocabWord>()
+        val cats = grouped.keys.shuffled(rng)
+        var added = true
+        while (added) {
+            added = false
+            for (cat in cats) {
+                val list = wordsByCat[cat]
+                if (list != null && list.isNotEmpty()) {
+                    result.add(list.removeAt(0))
+                    added = true
                 }
             }
-
-            result
-        } else {
-            candidates.shuffled(rng)
         }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
-    )
+        result
+    } else {
+        // Confidence buckets, seeded shuffle inside each, low rating first.
+        candidates.groupBy { it.confidenceRating }
+            .toSortedMap()
+            .flatMap { (_, bucket) -> bucket.shuffled(rng) }
+    }
+}
+
+private fun buildOrderedFeed() {
+    if (latestWords.isEmpty()) return
+    _filteredWords.value = orderFeed(latestWords, _selectedCategory.value, _selectedDifficulty.value, _shuffleSeed.value)
+}
 
     val categoryCounts: StateFlow<Map<String, Int>> = combine(
         allWords,
@@ -340,6 +359,7 @@ class VocabViewModel(application: Application) : AndroidViewModel(application) {
 
     fun reshuffleFeed() {
         _shuffleSeed.value = System.currentTimeMillis()
+        buildOrderedFeed()
         _userMessage.value = "🎲 Feed reshuffled with fresh random order"
     }
 
@@ -349,21 +369,18 @@ class VocabViewModel(application: Application) : AndroidViewModel(application) {
 
     fun selectCategory(category: String) {
         _selectedCategory.value = category
+        buildOrderedFeed()
     }
 
     fun selectDifficulty(difficulty: String) {
         _selectedDifficulty.value = difficulty
+        buildOrderedFeed()
     }
 
-    fun cycleSpeechRate() {
-        val nextRate = when (_speechRate.value) {
-            0.75f -> 1.0f
-            1.0f -> 1.25f
-            else -> 0.75f
-        }
-        _speechRate.value = nextRate
-        ttsManager.setSpeechRate(nextRate)
-        val label = when (nextRate) {
+    fun setSpeechRate(rate: Float) {
+        _speechRate.value = rate
+        ttsManager.setSpeechRate(rate)
+        val label = when (rate) {
             0.75f -> "Speed: 0.75x (Slow)"
             1.0f -> "Speed: 1.0x (Normal)"
             else -> "Speed: 1.25x (Fast)"

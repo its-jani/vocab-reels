@@ -70,4 +70,11 @@ object VocabCategories {
         GENERAL_ENGLISH,
         OXFORD_DICTIONARY
     )
+
+    val groupedList = listOf(
+        "Everyday & Dictionary" to listOf(GENERAL_ENGLISH, OXFORD_DICTIONARY),
+        "Career & Business" to listOf(CORPORATE, BUSINESS, TECHNICAL, STARTUP),
+        "Specialist & Academic" to listOf(MEDICAL, DOCTOR_SPECIALIZED, HISTORY),
+        "Modern & Conversational" to listOf(IDIOMS, GEN_Z)
+    )
 }

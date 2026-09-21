@@ -74,7 +74,6 @@ fun VocabReelsTheme(
 @Composable
 fun MyApplicationTheme(
     darkTheme: Boolean = true,
-    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     VocabReelsTheme(darkTheme = darkTheme, content = content)

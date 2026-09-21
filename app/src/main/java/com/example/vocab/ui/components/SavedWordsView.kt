@@ -74,9 +74,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.outlined.CheckCircleOutline
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ui.theme.*
@@ -172,7 +169,7 @@ fun SavedWordsView(
                         showExportDialog = true
                     },
                     modifier = Modifier
-                        .size(36.dp)
+                        .size(48.dp)
                         .background(DeepSurfaceVariant, CircleShape)
                         .testTag("export_saved_words_button")
                 ) {
@@ -190,7 +187,7 @@ fun SavedWordsView(
                         showImportDialog = true
                     },
                     modifier = Modifier
-                        .size(36.dp)
+                        .size(48.dp)
                         .background(DeepSurfaceVariant, CircleShape)
                         .testTag("import_words_button")
                 ) {
@@ -617,7 +614,9 @@ private fun SavedWordCard(
                             text = word.word,
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            color = LightText
+                            color = LightText,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         if (word.isLearned) {
                             Surface(
@@ -678,7 +677,7 @@ private fun SavedWordCard(
                     IconButton(
                         onClick = onToggleSave,
                         modifier = Modifier
-                            .size(34.dp)
+                            .size(48.dp)
                             .background(
                                 if (word.isSaved) CoralPink.copy(alpha = 0.2f) else DeepSurfaceVariant,
                                 CircleShape
@@ -688,7 +687,7 @@ private fun SavedWordCard(
                             imageVector = if (word.isSaved) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                             contentDescription = if (word.isSaved) "Remove from liked" else "Add to liked",
                             tint = if (word.isSaved) CoralPink else SubtitleText,
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                     }
 
@@ -696,7 +695,7 @@ private fun SavedWordCard(
                     IconButton(
                         onClick = onToggleLearned,
                         modifier = Modifier
-                            .size(34.dp)
+                            .size(48.dp)
                             .background(
                                 if (word.isLearned) EmeraldGreen.copy(alpha = 0.2f) else DeepSurfaceVariant,
                                 CircleShape
@@ -706,7 +705,7 @@ private fun SavedWordCard(
                             imageVector = if (word.isLearned) Icons.Default.CheckCircle else Icons.Outlined.CheckCircleOutline,
                             contentDescription = if (word.isLearned) "Mark as unlearned" else "Mark as learned",
                             tint = if (word.isLearned) EmeraldGreen else SubtitleText,
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                     }
 
@@ -714,14 +713,14 @@ private fun SavedWordCard(
                     IconButton(
                         onClick = onPronounce,
                         modifier = Modifier
-                            .size(34.dp)
+                            .size(48.dp)
                             .background(DeepSurfaceVariant, CircleShape)
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.VolumeUp,
                             contentDescription = "Pronounce word",
                             tint = NeonCyan,
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                     }
                 }
@@ -748,28 +747,24 @@ private fun SavedWordCard(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // Star Rating row
+            // Star Rating row (reel card labels this control "YOUR CONFIDENCE")
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(2.dp)
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text(
-                    text = "Confidence:",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MutedText,
-                    fontSize = 11.sp
-                )
-                Spacer(modifier = Modifier.width(4.dp))
                 for (star in 1..5) {
                     val isFilled = star <= word.confidenceRating
-                    Icon(
-                        imageVector = if (isFilled) Icons.Default.Star else Icons.Outlined.StarOutline,
-                        contentDescription = "Star $star",
-                        tint = if (isFilled) AmberOrange else CardBorder,
-                        modifier = Modifier
-                            .size(18.dp)
-                            .clickable { onSetConfidence(star) }
-                    )
+                    IconButton(
+                        onClick = { onSetConfidence(star) },
+                        modifier = Modifier.size(44.dp)
+                    ) {
+                        Icon(
+                            imageVector = if (isFilled) Icons.Default.Star else Icons.Outlined.StarOutline,
+                            contentDescription = "Rate $star stars",
+                            tint = if (isFilled) AmberOrange else CardBorder,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    }
                 }
             }
 

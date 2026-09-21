@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,9 +44,53 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.R
 import com.example.ui.theme.*
 import com.example.vocab.data.model.VocabCategories
+
+@Composable
+private fun CategoryDropdownItem(
+    category: String,
+    isSelected: Boolean,
+    count: Int,
+    onSelect: () -> Unit
+) {
+    val catColor = CategoryBadgeHelper.getCategoryColor(category)
+    DropdownMenuItem(
+        text = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = category,
+                    color = if (isSelected) catColor else LightText,
+                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = "$count words",
+                    color = MutedText,
+                    style = MaterialTheme.typography.labelSmall
+                )
+            }
+        },
+        onClick = onSelect,
+        leadingIcon = {
+            if (isSelected) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Selected",
+                    tint = catColor,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+        }
+    )
+}
 
 @Composable
 fun ReelTopBar(
@@ -163,7 +208,6 @@ fun ReelTopBar(
                     IconButton(
                         onClick = onOpenMainMenu,
                         modifier = Modifier
-                            .size(36.dp)
                             .background(DeepSurfaceVariant, RoundedCornerShape(10.dp))
                             .border(1.dp, CardBorder.copy(alpha = 0.8f), RoundedCornerShape(10.dp))
                             .testTag("main_menu_hamburger_button")
@@ -233,7 +277,7 @@ fun ReelTopBar(
                         }
                     }
 
-                    // Category Dropdown Menu
+                    // Category Dropdown Menu (grouped: All pinned, then 4 sections)
                     DropdownMenu(
                         expanded = categoryMenuExpanded,
                         onDismissRequest = { categoryMenuExpanded = false },
@@ -241,46 +285,35 @@ fun ReelTopBar(
                             .background(DeepSurfaceVariant)
                             .border(1.dp, CardBorder, RoundedCornerShape(8.dp))
                     ) {
-                        VocabCategories.list.forEach { category ->
-                            val isSelected = category == selectedCategory
-                            val count = categoryCounts[category] ?: 0
-                            val catColor = CategoryBadgeHelper.getCategoryColor(category)
-                            DropdownMenuItem(
-                                text = {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        modifier = Modifier.fillMaxWidth()
-                                    ) {
-                                        Text(
-                                            text = category,
-                                            color = if (isSelected) catColor else LightText,
-                                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                            style = MaterialTheme.typography.bodyMedium
-                                        )
-                                        Spacer(modifier = Modifier.width(16.dp))
-                                        Text(
-                                            text = "$count words",
-                                            color = MutedText,
-                                            style = MaterialTheme.typography.labelSmall
-                                        )
-                                    }
-                                },
-                                onClick = {
-                                    onSelectCategory(category)
-                                    categoryMenuExpanded = false
-                                },
-                                leadingIcon = {
-                                    if (isSelected) {
-                                        Icon(
-                                            imageVector = Icons.Default.Check,
-                                            contentDescription = "Selected",
-                                            tint = catColor,
-                                            modifier = Modifier.size(16.dp)
-                                        )
-                                    }
-                                }
+                        CategoryDropdownItem(
+                            category = VocabCategories.ALL,
+                            isSelected = selectedCategory == VocabCategories.ALL,
+                            count = categoryCounts[VocabCategories.ALL] ?: 0,
+                            onSelect = {
+                                onSelectCategory(VocabCategories.ALL)
+                                categoryMenuExpanded = false
+                            }
+                        )
+                        VocabCategories.groupedList.forEach { (group, cats) ->
+                            HorizontalDivider(color = CardBorder.copy(alpha = 0.5f))
+                            Text(
+                                text = group,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MutedText,
+                                letterSpacing = 0.5.sp,
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
                             )
+                            cats.forEach { category ->
+                                CategoryDropdownItem(
+                                    category = category,
+                                    isSelected = selectedCategory == category,
+                                    count = categoryCounts[category] ?: 0,
+                                    onSelect = {
+                                        onSelectCategory(category)
+                                        categoryMenuExpanded = false
+                                    }
+                                )
+                            }
                         }
                     }
                 }

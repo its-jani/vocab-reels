@@ -65,6 +65,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -85,7 +88,7 @@ fun ReelCard(
     onToggleSave: () -> Unit,
     onToggleLearned: () -> Unit,
     onSetConfidence: (Int) -> Unit,
-    onCycleSpeed: () -> Unit,
+    onSetSpeechRate: (Float) -> Unit,
     onPreviousWord: () -> Unit,
     onNextWord: () -> Unit,
     modifier: Modifier = Modifier
@@ -152,6 +155,7 @@ fun ReelCard(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(start = 20.dp, end = 74.dp, top = 12.dp, bottom = 16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
@@ -249,11 +253,8 @@ fun ReelCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .testTag("vocab_word_title")
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                        onClick = onPronounce
-                    )
+                    .semantics { role = Role.Button }
+                    .clickable(onClick = onPronounce)
             )
 
             Spacer(modifier = Modifier.height(6.dp))
@@ -400,7 +401,6 @@ fun ReelCard(
                                 IconButton(
                                     onClick = { onSetConfidence(star) },
                                     modifier = Modifier
-                                        .size(34.dp)
                                         .testTag("confidence_star_$star")
                                 ) {
                                     Icon(
@@ -411,6 +411,67 @@ fun ReelCard(
                                     )
                                 }
                             }
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Speech Speed segmented control (direct preset selection)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(DeepBackground.copy(alpha = 0.5f))
+                    .padding(10.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "SPEECH SPEED",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = NeonCyan,
+                        letterSpacing = 1.sp,
+                        fontSize = 10.sp
+                    )
+                }
+                Spacer(modifier = Modifier.height(6.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    listOf(0.75f, 1.0f, 1.25f).forEach { rate ->
+                        val isSelected = currentSpeechRate == rate
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(
+                                    if (isSelected) NeonCyan.copy(alpha = 0.2f) else Color.Transparent
+                                )
+                                .border(
+                                    1.dp,
+                                    if (isSelected) NeonCyan else CardBorder,
+                                    RoundedCornerShape(10.dp)
+                                )
+                                .clickable(onClick = { onSetSpeechRate(rate) })
+                                .padding(vertical = 10.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = when (rate) {
+                                    0.75f -> "0.75x"
+                                    1.25f -> "1.25x"
+                                    else -> "1.0x"
+                                },
+                                style = MaterialTheme.typography.labelMedium,
+                                color = if (isSelected) NeonCyan else MutedText,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium
+                            )
                         }
                     }
                 }
@@ -554,48 +615,11 @@ fun ReelCard(
                 )
             }
 
-            // Speed Adjustment Button
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Box(
-                    modifier = Modifier
-                        .size(44.dp)
-                        .clip(CircleShape)
-                        .background(DeepSurface.copy(alpha = 0.85f))
-                        .border(1.dp, CardBorder, CircleShape)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                            onClick = onCycleSpeed
-                        )
-                        .testTag("speech_rate_button"),
-                    contentAlignment = Alignment.Center
-                ) {
-                    val speedText = when (currentSpeechRate) {
-                        0.75f -> "0.7x"
-                        1.25f -> "1.3x"
-                        else -> "1.0x"
-                    }
-                    Text(
-                        text = speedText,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = NeonCyan,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = "Speed",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MutedText,
-                    fontSize = 11.sp
-                )
-            }
-
             // Copy Word Button
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(48.dp)
                         .clip(CircleShape)
                         .background(DeepSurface.copy(alpha = 0.85f))
                         .border(1.dp, CardBorder, CircleShape)
@@ -634,7 +658,7 @@ fun ReelCard(
                 IconButton(
                     onClick = onPreviousWord,
                     modifier = Modifier
-                        .size(34.dp)
+                        .size(40.dp)
                         .background(DeepSurfaceVariant.copy(alpha = 0.8f), CircleShape)
                         .testTag("previous_word_button")
                 ) {
@@ -648,7 +672,7 @@ fun ReelCard(
                 IconButton(
                     onClick = onNextWord,
                     modifier = Modifier
-                        .size(34.dp)
+                        .size(40.dp)
                         .background(DeepSurfaceVariant.copy(alpha = 0.8f), CircleShape)
                         .testTag("next_word_button")
                 ) {

@@ -67,7 +67,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ui.theme.*
-import com.example.vocab.data.model.DifficultyLevel
 import com.example.vocab.data.model.VocabCategories
 import com.example.vocab.data.model.VocabWord
 
@@ -179,7 +178,7 @@ fun SearchWordDialog(
 
                     IconButton(
                         onClick = onDismiss,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(48.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Clear,
@@ -479,7 +478,7 @@ private fun DirectWordDefinitionCard(
                         color = ElectricIndigo.copy(alpha = 0.25f),
                         border = androidx.compose.foundation.BorderStroke(1.dp, ElectricIndigo.copy(alpha = 0.6f)),
                         modifier = Modifier
-                            .size(36.dp)
+                            .size(48.dp)
                             .clickable(onClick = onPronounce)
                     ) {
                         Box(contentAlignment = Alignment.Center) {
@@ -487,7 +486,7 @@ private fun DirectWordDefinitionCard(
                                 imageVector = Icons.AutoMirrored.Filled.VolumeUp,
                                 contentDescription = "Pronounce word",
                                 tint = NeonCyan,
-                                modifier = Modifier.size(18.dp)
+                                modifier = Modifier.size(22.dp)
                             )
                         }
                     }
@@ -498,7 +497,7 @@ private fun DirectWordDefinitionCard(
                         color = if (word.isSaved) CoralPink.copy(alpha = 0.25f) else DeepSurface,
                         border = androidx.compose.foundation.BorderStroke(1.dp, if (word.isSaved) CoralPink else CardBorder),
                         modifier = Modifier
-                            .size(36.dp)
+                            .size(48.dp)
                             .clickable(onClick = onToggleSave)
                     ) {
                         Box(contentAlignment = Alignment.Center) {
@@ -506,7 +505,7 @@ private fun DirectWordDefinitionCard(
                                 imageVector = if (word.isSaved) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
                                 contentDescription = "Save word",
                                 tint = if (word.isSaved) CoralPink else MutedText,
-                                modifier = Modifier.size(18.dp)
+                                modifier = Modifier.size(22.dp)
                             )
                         }
                     }
@@ -726,13 +725,13 @@ private fun SearchResultItem(
 
                 IconButton(
                     onClick = onGoToFeed,
-                    modifier = Modifier.size(28.dp)
+                    modifier = Modifier.size(48.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.PlayArrow,
                         contentDescription = "View Reel",
                         tint = NeonCyan,
-                        modifier = Modifier.size(16.dp)
+                        modifier = Modifier.size(18.dp)
                     )
                 }
             }

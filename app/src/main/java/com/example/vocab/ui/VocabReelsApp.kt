@@ -153,7 +153,7 @@ fun VocabReelsApp(
                             onToggleLearned = { viewModel.toggleLearned(it) },
                             onSetConfidence = { word, rating -> viewModel.setConfidenceRating(word, rating) },
                             onRecordReview = { wordId -> viewModel.recordReview(wordId) },
-                            onCycleSpeed = { viewModel.cycleSpeechRate() },
+                            onSetSpeechRate = { rate -> viewModel.setSpeechRate(rate) },
                             onClearJumpTarget = { viewModel.clearJumpTarget() },
                             onResetFilters = {
                                 viewModel.selectCategory(VocabCategories.ALL)
@@ -329,7 +329,7 @@ private fun ReelsFeedScreen(
     onToggleLearned: (VocabWord) -> Unit,
     onSetConfidence: (VocabWord, Int) -> Unit,
     onRecordReview: (Long) -> Unit,
-    onCycleSpeed: () -> Unit,
+    onSetSpeechRate: (Float) -> Unit,
     onClearJumpTarget: () -> Unit,
     onResetFilters: () -> Unit
 ) {
@@ -472,7 +472,7 @@ private fun ReelsFeedScreen(
                         onToggleSave = { onToggleSave(currentWord) },
                         onToggleLearned = { onToggleLearned(currentWord) },
                         onSetConfidence = { rating -> onSetConfidence(currentWord, rating) },
-                        onCycleSpeed = onCycleSpeed,
+                        onSetSpeechRate = onSetSpeechRate,
                         onPreviousWord = {
                             coroutineScope.launch {
                                 if (pagerState.currentPage > 0) {

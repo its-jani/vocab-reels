@@ -1,0 +1,80 @@
+name: Build & Publish Release APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag / Release version (e.g. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant Execute Permission to Gradlew
+        run: chmod +x gradlew
+
+      - name: Create placeholder .env if not present
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.example .env
+          fi
+
+      - name: Build Release APK
+        run: ./gradlew assembleRelease --no-daemon
+
+      - name: Prepare Release Artifacts
+        id: prepare_apk
+        run: |
+          VERSION_TAG="${{ github.ref_name }}"
+          if [ -z "$VERSION_TAG" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION_TAG="${{ github.event.inputs.tag_name }}"
+          fi
+          if [ -z "$VERSION_TAG" ]; then
+            VERSION_TAG="v1.0.0"
+          fi
+          
+          mkdir -p release_apks
+          cp app/build/outputs/apk/release/app-release.apk release_apks/VocabReels-${VERSION_TAG}.apk
+          echo "tag_name=${VERSION_TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload APK to Workflow Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: VocabReels-${{ steps.prepare_apk.outputs.tag_name }}
+          path: release_apks/VocabReels-${{ steps.prepare_apk.outputs.tag_name }}.apk
+
+      - name: Create GitHub Release & Upload APK
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+        with:
+          name: VocabReels ${{ steps.prepare_apk.outputs.tag_name }}
+          tag_name: ${{ steps.prepare_apk.outputs.tag_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            release_apks/VocabReels-${{ steps.prepare_apk.outputs.tag_name }}.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
