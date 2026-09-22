@@ -2,8 +2,6 @@
 
 # 🎬 VocabReels
 
-<img src="app/src/main/res/drawable/ic_vocab_logo.png" alt="VocabReels Logo" width="160" />
-
 **Master English Vocabulary with an Addictive, Reels-Style Micro-Learning Experience powered by Gemini AI.**
 
 [![Android](https://img.shields.io/badge/Platform-Android%207.0%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/its-jani/vocab-reels)
@@ -32,7 +30,9 @@
 Swipe through beautifully designed word cards, listen to crystal-clear native pronunciations, get smart AI-powered context explanations from Google Gemini, track daily goals, and quiz yourself to achieve lasting retention!
 
 <p align="center">
-  <img src="app/src/test/screenshots/greeting.png" alt="VocabReels App Screenshot" width="320" />
+  <img src="screenshots/01_vocab_card.jpg" alt="VocabReels word card — Mogging" width="280" />
+  <br/>
+  <em>The core reels-style word card — swipe through 5,319+ words with definitions, examples & confidence rating</em>
 </p>
 
 ---
@@ -65,6 +65,30 @@ You can download and install the app on any Android device directly from the rep
 | 🔍 **Instant Search & Bookmarks** | Quickly search for words, view detailed definitions, and bookmark difficult words for quick revision. |
 | ⚡ **Offline-First Architecture** | Pre-packaged SQLite/Room database ensures you can study anywhere, even with zero internet connection. |
 | 🎨 **Material 3 Modern Dark Theme** | Curated color palettes, glassmorphism accents, and comfortable high-contrast typography for night reading. |
+
+---
+
+## 📸 App Screenshots
+
+<p align="center">
+  <img src="screenshots/01_vocab_card.jpg" alt="Vocab Card — Reels Feed" width="200" />
+  &nbsp;&nbsp;
+  <img src="screenshots/02_categories.jpg" alt="Category Selector" width="200" />
+  &nbsp;&nbsp;
+  <img src="screenshots/03_search.jpg" alt="Dictionary & Word Search" width="200" />
+</p>
+<p align="center">
+  <em>Vocab reels card &nbsp;|&nbsp; Category selector (5,319 words across 11 lists) &nbsp;|&nbsp; Instant word search</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/04_dashboard_1.jpg" alt="Learning Dashboard — Activity & Streak" width="200" />
+  &nbsp;&nbsp;
+  <img src="screenshots/05_dashboard_2.jpg" alt="Learning Dashboard — Categories & Quick Actions" width="200" />
+</p>
+<p align="center">
+  <em>Daily activity & 7-day streak tracking &nbsp;|&nbsp; Per-category progress & quick actions</em>
+</p>
 
 ---
 
