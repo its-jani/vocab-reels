@@ -26,33 +26,24 @@ android {
   signingConfigs {
     create("release") {
       val keystorePath = System.getenv("KEYSTORE_PATH")
-      val keyFile = if (keystorePath != null) file(keystorePath) else file("${rootDir}/my-upload-key.jks")
-      if (keyFile.exists() && System.getenv("STORE_PASSWORD") != null) {
-        storeFile = keyFile
-        storePassword = System.getenv("STORE_PASSWORD")
-        keyAlias = System.getenv("KEY_ALIAS") ?: "upload"
-        keyPassword = System.getenv("KEY_PASSWORD") ?: System.getenv("STORE_PASSWORD")
-      } else {
-        val debugKeystore = file("${rootDir}/debug.keystore")
-        if (debugKeystore.exists()) {
-          storeFile = debugKeystore
-          storePassword = "android"
-          keyAlias = "androiddebugkey"
-          keyPassword = "android"
-        } else {
-          initWith(getByName("debug"))
-        }
+      val keystoreFile = when {
+        keystorePath != null && file(keystorePath).exists() -> file(keystorePath)
+        keystorePath != null && file("${rootDir}/$keystorePath").exists() -> file("${rootDir}/$keystorePath")
+        file("${projectDir}/release.jks").exists() -> file("${projectDir}/release.jks")
+        file("${rootDir}/app/release.jks").exists() -> file("${rootDir}/app/release.jks")
+        file("${rootDir}/release.jks").exists() -> file("${rootDir}/release.jks")
+        file("release.jks").exists() -> file("release.jks")
+        else -> null
       }
-    }
-    create("debugConfig") {
-      val debugKeystore = file("${rootDir}/debug.keystore")
-      if (debugKeystore.exists()) {
-        storeFile = debugKeystore
-        storePassword = "android"
-        keyAlias = "androiddebugkey"
-        keyPassword = "android"
-      } else {
-        initWith(getByName("debug"))
+      val storePass = System.getenv("KEYSTORE_PASSWORD") ?: System.getenv("STORE_PASSWORD")
+      val keyUserAlias = System.getenv("KEY_ALIAS")
+      val keyPass = System.getenv("KEY_PASSWORD") ?: storePass
+
+      if (keystoreFile != null && !storePass.isNullOrBlank() && !keyUserAlias.isNullOrBlank()) {
+        storeFile = keystoreFile
+        storePassword = storePass
+        keyAlias = keyUserAlias
+        keyPassword = keyPass
       }
     }
   }
@@ -62,9 +53,12 @@ android {
       isCrunchPngs = false
       isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-      signingConfig = signingConfigs.getByName("release")
+      val releaseSigning = signingConfigs.getByName("release")
+      if (releaseSigning.storeFile != null) {
+        signingConfig = releaseSigning
+      }
     }
-    debug { signingConfig = signingConfigs.getByName("debugConfig") }
+    debug { }
   }
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
