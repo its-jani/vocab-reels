@@ -2,6 +2,8 @@
 
 # 🎬 VocabReels
 
+<img src="app/src/main/res/drawable/ic_vocab_logo.png" alt="VocabReels Logo" width="160" />
+
 **Master English Vocabulary with an Addictive, Reels-Style Micro-Learning Experience powered by Gemini AI.**
 
 [![Android](https://img.shields.io/badge/Platform-Android%207.0%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/its-jani/vocab-reels)
@@ -28,6 +30,10 @@
 **VocabReels** transforms the way you learn vocabulary. Instead of boring flashcard decks or bulky dictionary apps, VocabReels brings the addictive, smooth swipe gestures of short-form video reels (TikTok / Instagram Reels / YouTube Shorts) directly to vocabulary learning.
 
 Swipe through beautifully designed word cards, listen to crystal-clear native pronunciations, get smart AI-powered context explanations from Google Gemini, track daily goals, and quiz yourself to achieve lasting retention!
+
+<p align="center">
+  <img src="app/src/test/screenshots/greeting.png" alt="VocabReels App Screenshot" width="320" />
+</p>
 
 ---
 
