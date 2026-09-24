@@ -1,0 +1,110 @@
+name: Build & Publish Release APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag / Release version (e.g. v1.1.0)'
+        required: true
+        default: 'v1.1.0'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant Execute Permission to Gradlew
+        run: chmod +x gradlew
+
+      - name: Create placeholder .env if not present
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.example .env
+          fi
+
+      - name: Decode Keystore
+        if: ${{ env.KEYSTORE_BASE64 != '' }}
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 --decode > app/release.jks
+
+      - name: Build Release APK
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew assembleRelease
+
+      - name: Prepare Release Artifacts
+        id: prepare_release
+        run: |
+          VERSION_TAG="${{ github.ref_name }}"
+          if [ -z "$VERSION_TAG" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION_TAG="${{ github.event.inputs.tag_name }}"
+          fi
+          if [ -z "$VERSION_TAG" ]; then
+            VERSION_TAG="v1.1.0"
+          fi
+          
+          mkdir -p release_apks
+          APK_FILE=$(find app/build/outputs/apk/release -name "*.apk" 2>/dev/null | head -n 1)
+          if [ -z "$APK_FILE" ] || [ ! -f "$APK_FILE" ]; then
+            echo "Release APK not found, checking debug APK outputs..."
+            APK_FILE=$(find app/build/outputs/apk/debug -name "*.apk" 2>/dev/null | head -n 1)
+          fi
+
+          if [ -n "$APK_FILE" ] && [ -f "$APK_FILE" ]; then
+            echo "Found APK at $APK_FILE"
+            cp "$APK_FILE" "release_apks/VocabReels-${VERSION_TAG}.apk"
+            echo "apk_path=release_apks/VocabReels-${VERSION_TAG}.apk" >> "$GITHUB_OUTPUT"
+          else
+            echo "Error: No APK file found in app/build/outputs/apk/"
+            exit 1
+          fi
+          echo "tag_name=${VERSION_TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload APK to Workflow Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: VocabReels-${{ steps.prepare_release.outputs.tag_name }}-apk
+          path: ${{ steps.prepare_release.outputs.apk_path }}
+
+      - name: Create GitHub Release & Upload APK
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+        with:
+          name: VocabReels ${{ steps.prepare_release.outputs.tag_name }}
+          tag_name: ${{ steps.prepare_release.outputs.tag_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            ${{ steps.prepare_release.outputs.apk_path }}
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/apk/debug/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Clean Up Keystore
+        if: always()
+        run: rm -f app/release.jks
