@@ -177,37 +177,27 @@ fun ReelTopBar(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     // Search Button
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = DeepSurfaceVariant,
-                        border = androidx.compose.foundation.BorderStroke(1.dp, CardBorder.copy(alpha = 0.8f)),
+                    IconButton(
+                        onClick = onOpenSearch,
                         modifier = Modifier
-                            .clickable(onClick = onOpenSearch)
+                            .size(38.dp)
+                            .background(DeepSurfaceVariant, RoundedCornerShape(10.dp))
+                            .border(1.dp, CardBorder.copy(alpha = 0.8f), RoundedCornerShape(10.dp))
                             .testTag("search_dictionary_button")
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 7.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "Search",
-                                tint = NeonCyan,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                text = "Search",
-                                style = MaterialTheme.typography.labelMedium,
-                                color = LightText
-                            )
-                        }
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search",
+                            tint = NeonCyan,
+                            modifier = Modifier.size(20.dp)
+                        )
                     }
 
                     // Top Three-Line (Hamburger) Menu Button
                     IconButton(
                         onClick = onOpenMainMenu,
                         modifier = Modifier
+                            .size(38.dp)
                             .background(DeepSurfaceVariant, RoundedCornerShape(10.dp))
                             .border(1.dp, CardBorder.copy(alpha = 0.8f), RoundedCornerShape(10.dp))
                             .testTag("main_menu_hamburger_button")

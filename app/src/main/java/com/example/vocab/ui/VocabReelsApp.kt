@@ -453,7 +453,10 @@ private fun ReelsFeedScreen(
                 VerticalPager(
                     state = pagerState,
                     beyondViewportPageCount = 1,
-                    flingBehavior = PagerDefaults.flingBehavior(state = pagerState),
+                    flingBehavior = PagerDefaults.flingBehavior(
+                        state = pagerState,
+                        snapPositionalThreshold = 0.15f
+                    ),
                     modifier = Modifier
                         .fillMaxSize()
                         .testTag("infinite_reels_vertical_pager")
@@ -467,24 +470,10 @@ private fun ReelsFeedScreen(
                         currentIndex = wordIndex + 1,
                         totalCount = words.size,
                         isSpeaking = isCurrentWordSpeaking,
-                        currentSpeechRate = speechRate,
                         onPronounce = { onPronounceWord(currentWord.word) },
                         onToggleSave = { onToggleSave(currentWord) },
                         onToggleLearned = { onToggleLearned(currentWord) },
-                        onSetConfidence = { rating -> onSetConfidence(currentWord, rating) },
-                        onSetSpeechRate = onSetSpeechRate,
-                        onPreviousWord = {
-                            coroutineScope.launch {
-                                if (pagerState.currentPage > 0) {
-                                    pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                                }
-                            }
-                        },
-                        onNextWord = {
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                            }
-                        }
+                        onSetConfidence = { rating -> onSetConfidence(currentWord, rating) }
                     )
                 }
             }

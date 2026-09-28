@@ -114,6 +114,11 @@ class VocabViewModel(application: Application) : AndroidViewModel(application) {
                 if (ids != lastFeedWordIds) {
                     lastFeedWordIds = ids
                     buildOrderedFeed()
+                } else {
+                    val wordMap = list.associateBy { it.id }
+                    _filteredWords.value = _filteredWords.value.map { current ->
+                        wordMap[current.id] ?: current
+                    }
                 }
             }
         }
@@ -393,16 +398,22 @@ private fun buildOrderedFeed() {
     }
 
     fun toggleSave(word: VocabWord) {
+        val willBeSaved = !word.isSaved
+        _filteredWords.value = _filteredWords.value.map {
+            if (it.id == word.id) it.copy(isSaved = willBeSaved) else it
+        }
         viewModelScope.launch {
-            val willBeSaved = !word.isSaved
             repository.toggleSave(word.id, word.isSaved)
             _userMessage.value = if (willBeSaved) "\"${word.word}\" saved to your collection" else "Removed from saved words"
         }
     }
 
     fun toggleLearned(word: VocabWord) {
+        val willBeLearned = !word.isLearned
+        _filteredWords.value = _filteredWords.value.map {
+            if (it.id == word.id) it.copy(isLearned = willBeLearned) else it
+        }
         viewModelScope.launch {
-            val willBeLearned = !word.isLearned
             repository.toggleLearned(word.id, word.isLearned)
             _userMessage.value = if (willBeLearned) {
                 "✓ Marked \"${word.word}\" as Learned!"
@@ -413,6 +424,9 @@ private fun buildOrderedFeed() {
     }
 
     fun setConfidenceRating(word: VocabWord, rating: Int) {
+        _filteredWords.value = _filteredWords.value.map {
+            if (it.id == word.id) it.copy(confidenceRating = rating) else it
+        }
         viewModelScope.launch {
             repository.setConfidenceRating(word.id, rating)
             val label = when (rating) {

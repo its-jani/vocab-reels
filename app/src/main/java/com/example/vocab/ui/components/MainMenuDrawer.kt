@@ -422,6 +422,7 @@ fun MainMenuBottomSheet(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Row(
+                                    modifier = Modifier.weight(1f, fill = false),
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
@@ -434,7 +435,9 @@ fun MainMenuBottomSheet(
                                         text = metric.category,
                                         style = MaterialTheme.typography.bodyMedium,
                                         fontWeight = FontWeight.Bold,
-                                        color = LightText
+                                        color = LightText,
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                                     )
                                 }
 
@@ -442,7 +445,9 @@ fun MainMenuBottomSheet(
                                     text = "${metric.percentCompleted}% Completed",
                                     style = MaterialTheme.typography.labelMedium,
                                     fontWeight = FontWeight.Bold,
-                                    color = categoryColor
+                                    color = categoryColor,
+                                    maxLines = 1,
+                                    modifier = Modifier.padding(start = 8.dp)
                                 )
                             }
 
@@ -465,7 +470,10 @@ fun MainMenuBottomSheet(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
                                     Text(
                                         text = "✓ ${metric.learnedWords} learned",
                                         style = MaterialTheme.typography.labelSmall,
@@ -481,10 +489,11 @@ fun MainMenuBottomSheet(
                                 }
 
                                 Text(
-                                    text = "${metric.remainingWords} remaining of ${metric.totalWords}",
+                                    text = "${metric.remainingWords} remaining",
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MutedText,
-                                    fontSize = 11.sp
+                                    fontSize = 11.sp,
+                                    maxLines = 1
                                 )
                             }
                         }
