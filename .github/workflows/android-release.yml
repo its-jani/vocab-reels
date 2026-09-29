@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag / Release version (e.g. v1.3.0)'
+        required: false
+        default: 'v1.3.0'
 
 permissions:
   contents: write
@@ -26,18 +32,44 @@ jobs:
       - name: Make Gradlew Executable
         run: chmod +x gradlew
 
+      - name: Create placeholder .env if not present
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.example .env
+          fi
+
       - name: Build Signed Release APK
         run: ./gradlew assembleRelease
 
-      - name: Rename APK Asset
+      - name: Prepare APK Asset
+        id: prepare_apk
         run: |
+          TAG_NAME="${{ github.ref_name }}"
+          if [ -z "$TAG_NAME" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG_NAME="${{ github.event.inputs.tag_name }}"
+          fi
+          if [ -z "$TAG_NAME" ] || [ "${TAG_NAME}" = "main" ] || [ "${TAG_NAME}" = "master" ]; then
+            TAG_NAME="v1.3.0"
+          fi
           mkdir -p release-assets
-          cp app/build/outputs/apk/release/app-release.apk release-assets/VocabReels-v1.2.0.apk
+          APK_PATH=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
+          if [ -n "$APK_PATH" ] && [ -f "$APK_PATH" ]; then
+            echo "Found APK at $APK_PATH"
+            cp "$APK_PATH" "release-assets/VocabReels-${TAG_NAME}.apk"
+            echo "apk_file=release-assets/VocabReels-${TAG_NAME}.apk" >> "$GITHUB_OUTPUT"
+            echo "tag_name=${TAG_NAME}" >> "$GITHUB_OUTPUT"
+          else
+            echo "Error: Release APK not found in app/build/outputs/apk/release"
+            exit 1
+          fi
 
       - name: Upload Signed APK to GitHub Release
         uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         with:
-          files: release-assets/VocabReels-v1.2.0.apk
+          name: VocabReels ${{ steps.prepare_apk.outputs.tag_name }}
+          tag_name: ${{ steps.prepare_apk.outputs.tag_name }}
+          files: ${{ steps.prepare_apk.outputs.apk_file }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
