@@ -24,9 +24,20 @@ android {
   }
 
   signingConfigs {
+    val repoKeystore = rootProject.file("keystore/release.keystore")
+
+    getByName("debug") {
+      if (repoKeystore.exists()) {
+        storeFile = repoKeystore
+        storePassword = "android"
+        keyAlias = "androiddebugkey"
+        keyPassword = "android"
+      }
+    }
+
     create("release") {
       val keystorePath = System.getenv("KEYSTORE_PATH")
-      val keystoreFile = when {
+      val customKeystore = when {
         keystorePath != null && file(keystorePath).exists() -> file(keystorePath)
         keystorePath != null && file("${rootDir}/$keystorePath").exists() -> file("${rootDir}/$keystorePath")
         file("${projectDir}/release.jks").exists() -> file("${projectDir}/release.jks")
@@ -39,11 +50,16 @@ android {
       val keyUserAlias = System.getenv("KEY_ALIAS")
       val keyPass = System.getenv("KEY_PASSWORD") ?: storePass
 
-      if (keystoreFile != null && !storePass.isNullOrBlank() && !keyUserAlias.isNullOrBlank()) {
-        storeFile = keystoreFile
+      if (customKeystore != null && !storePass.isNullOrBlank() && !keyUserAlias.isNullOrBlank()) {
+        storeFile = customKeystore
         storePassword = storePass
         keyAlias = keyUserAlias
         keyPassword = keyPass
+      } else if (repoKeystore.exists()) {
+        storeFile = repoKeystore
+        storePassword = "android"
+        keyAlias = "androiddebugkey"
+        keyPassword = "android"
       }
     }
   }
@@ -51,13 +67,15 @@ android {
   buildTypes {
     release {
       isMinifyEnabled = false
-      signingConfig = signingConfigs.getByName("debug")
+      signingConfig = signingConfigs.getByName("release")
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"
       )
     }
-    debug { }
+    debug {
+      signingConfig = signingConfigs.getByName("debug")
+    }
   }
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
