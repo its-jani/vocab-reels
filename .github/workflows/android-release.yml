@@ -38,19 +38,31 @@ jobs:
             cp .env.example .env
           fi
 
-      - name: Build Signed Release APK
-        run: ./gradlew assembleRelease
-
-      - name: Prepare APK Asset
-        id: prepare_apk
+      - name: Determine Release Version
+        id: version_info
         run: |
           TAG_NAME="${{ github.ref_name }}"
           if [ -z "$TAG_NAME" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             TAG_NAME="${{ github.event.inputs.tag_name }}"
           fi
           if [ -z "$TAG_NAME" ] || [ "${TAG_NAME}" = "main" ] || [ "${TAG_NAME}" = "master" ]; then
-            TAG_NAME="v1.3.0"
+            TAG_NAME="v1.3.2"
           fi
+          RAW_VERSION="${TAG_NAME#v}"
+          echo "tag_name=${TAG_NAME}" >> "$GITHUB_OUTPUT"
+          echo "version_name=${RAW_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "version_code=${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+
+      - name: Build Signed Release APK
+        env:
+          VERSION_NAME: ${{ steps.version_info.outputs.version_name }}
+          VERSION_CODE: ${{ steps.version_info.outputs.version_code }}
+        run: ./gradlew assembleRelease -PversionName="${{ steps.version_info.outputs.version_name }}" -PversionCode="${{ steps.version_info.outputs.version_code }}"
+
+      - name: Prepare APK Asset
+        id: prepare_apk
+        run: |
+          TAG_NAME="${{ steps.version_info.outputs.tag_name }}"
           mkdir -p release-assets
           APK_PATH=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
           if [ -n "$APK_PATH" ] && [ -f "$APK_PATH" ]; then

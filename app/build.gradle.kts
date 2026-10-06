@@ -17,8 +17,14 @@ android {
     applicationId = "com.aistudio.vocabreels.vrxmq"
     minSdk = 24
     targetSdk = 36
-    versionCode = 4
-    versionName = "1.3.0"
+
+    val envVersionName = System.getenv("VERSION_NAME")
+      ?: (project.findProperty("versionName") as? String)
+    val envVersionCode = System.getenv("VERSION_CODE")?.toIntOrNull()
+      ?: (project.findProperty("versionCode") as? String)?.toIntOrNull()
+
+    versionCode = envVersionCode ?: 6
+    versionName = envVersionName ?: "1.3.2"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }

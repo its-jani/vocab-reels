@@ -48,24 +48,34 @@ jobs:
         run: |
           echo "$KEYSTORE_BASE64" | base64 --decode > app/release.jks
 
-      - name: Build Release App Bundle (AAB)
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew bundleRelease
-
-      - name: Prepare Release Artifacts
+      - name: Determine Release Version
         id: prepare_bundle
         run: |
           VERSION_TAG="${{ github.ref_name }}"
           if [ -z "$VERSION_TAG" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             VERSION_TAG="${{ github.event.inputs.tag_name }}"
           fi
-          if [ -z "$VERSION_TAG" ]; then
-            VERSION_TAG="v1.0.0"
+          if [ -z "$VERSION_TAG" ] || [ "${VERSION_TAG}" = "main" ] || [ "${VERSION_TAG}" = "master" ]; then
+            VERSION_TAG="v1.3.2"
           fi
-          
+          RAW_VERSION="${VERSION_TAG#v}"
+          echo "tag_name=${VERSION_TAG}" >> "$GITHUB_OUTPUT"
+          echo "version_name=${RAW_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "version_code=${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+
+      - name: Build Release App Bundle (AAB)
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          VERSION_NAME: ${{ steps.prepare_bundle.outputs.version_name }}
+          VERSION_CODE: ${{ steps.prepare_bundle.outputs.version_code }}
+        run: ./gradlew bundleRelease -PversionName="${{ steps.prepare_bundle.outputs.version_name }}" -PversionCode="${{ steps.prepare_bundle.outputs.version_code }}"
+
+      - name: Prepare Release Artifacts
+        id: package_bundle
+        run: |
+          VERSION_TAG="${{ steps.prepare_bundle.outputs.tag_name }}"
           mkdir -p release_bundles
           AAB_PATH=$(find app/build/outputs/bundle/release -name "*.aab" | head -n 1)
           if [ -n "$AAB_PATH" ] && [ -f "$AAB_PATH" ]; then
@@ -75,7 +85,6 @@ jobs:
             echo "Error: Release AAB bundle not found in app/build/outputs/bundle/release"
             exit 1
           fi
-          echo "tag_name=${VERSION_TAG}" >> "$GITHUB_OUTPUT"
 
       - name: Upload AAB to Workflow Artifacts
         uses: actions/upload-artifact@v4

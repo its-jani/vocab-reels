@@ -613,6 +613,24 @@ fun MainMenuBottomSheet(
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                 }
+
+                // Section 5: App Version Footer
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 12.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "VocabReels v${com.example.BuildConfig.VERSION_NAME}",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MutedText.copy(alpha = 0.7f),
+                            letterSpacing = 0.8.sp
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             }
         }
     }
