@@ -78,7 +78,7 @@ You can download and install the app on any Android device directly from the rep
   <img src="screenshots/03_search.jpg" alt="Dictionary & Word Search" width="200" />
 </p>
 <p align="center">
-  <em>Vocab reels card &nbsp;|&nbsp; Category selector (5,319 words across 11 lists) &nbsp;|&nbsp; Instant word search</em>
+  <em>Vocab reels card &nbsp;|&nbsp; Category selector (5,319 words across 10 lists) &nbsp;|&nbsp; Instant word search</em>
 </p>
 
 <p align="center">

@@ -54,7 +54,6 @@ object VocabCategories {
     const val HISTORY = "History terms"
     const val DOCTOR_SPECIALIZED = "Doctor & Specialized"
     const val GENERAL_ENGLISH = "General English"
-    const val OXFORD_DICTIONARY = "Oxford Dictionary"
 
     val list = listOf(
         ALL,
@@ -67,14 +66,14 @@ object VocabCategories {
         GEN_Z,
         HISTORY,
         DOCTOR_SPECIALIZED,
-        GENERAL_ENGLISH,
-        OXFORD_DICTIONARY
+        GENERAL_ENGLISH
     )
 
     val groupedList = listOf(
-        "Everyday & Dictionary" to listOf(GENERAL_ENGLISH, OXFORD_DICTIONARY),
+        "Everyday & General" to listOf(GENERAL_ENGLISH),
         "Career & Business" to listOf(CORPORATE, BUSINESS, TECHNICAL, STARTUP),
         "Specialist & Academic" to listOf(MEDICAL, DOCTOR_SPECIALIZED, HISTORY),
         "Modern & Conversational" to listOf(IDIOMS, GEN_Z)
     )
 }
+

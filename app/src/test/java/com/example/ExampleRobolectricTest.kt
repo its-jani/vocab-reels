@@ -42,9 +42,9 @@ class ExampleRobolectricTest {
     val count = db.vocabDao().getWordCount()
     assertTrue("Dictionary should contain thousands of words (found $count)", count >= 4000)
 
-    // Verify Oxford category exists and is populated
+    // Verify General English category exists and is populated
     val categories = VocabCategories.list
-    assertTrue("Oxford Dictionary category must be present", categories.contains(VocabCategories.OXFORD_DICTIONARY))
+    assertTrue("General English category must be present", categories.contains(VocabCategories.GENERAL_ENGLISH))
 
     db.close()
   }

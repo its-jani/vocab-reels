@@ -221,8 +221,8 @@ class VocabViewModel(application: Application) : AndroidViewModel(application) {
         .map { words ->
             VocabCategories.list.filter { it != VocabCategories.ALL }.map { cat ->
                 val matching = words.filter { w ->
-                    if (cat == VocabCategories.OXFORD_DICTIONARY) {
-                        w.category == VocabCategories.OXFORD_DICTIONARY || w.category == VocabCategories.GENERAL_ENGLISH
+                    if (cat == VocabCategories.GENERAL_ENGLISH) {
+                        w.category == VocabCategories.GENERAL_ENGLISH || w.category == "Oxford Dictionary"
                     } else {
                         w.category == cat
                     }
@@ -265,7 +265,7 @@ private fun orderFeed(
     val candidates = words.filter { word ->
         val matchesCategory = when (category) {
             VocabCategories.ALL -> true
-            VocabCategories.OXFORD_DICTIONARY -> word.category == VocabCategories.OXFORD_DICTIONARY || word.category == VocabCategories.GENERAL_ENGLISH
+            VocabCategories.GENERAL_ENGLISH -> word.category == VocabCategories.GENERAL_ENGLISH || word.category == "Oxford Dictionary"
             else -> word.category == category
         }
         val matchesDifficulty = (difficulty == "All Levels") || word.difficulty.equals(difficulty, ignoreCase = true)
@@ -320,8 +320,8 @@ private fun buildOrderedFeed() {
         val filteredByDiff = if (diff == "All Levels") words else words.filter { it.difficulty.equals(diff, ignoreCase = true) }
         counts[VocabCategories.ALL] = filteredByDiff.size
         VocabCategories.list.filter { it != VocabCategories.ALL }.forEach { cat: String ->
-            counts[cat] = if (cat == VocabCategories.OXFORD_DICTIONARY) {
-                filteredByDiff.count { it.category == VocabCategories.OXFORD_DICTIONARY || it.category == VocabCategories.GENERAL_ENGLISH }
+            counts[cat] = if (cat == VocabCategories.GENERAL_ENGLISH) {
+                filteredByDiff.count { it.category == VocabCategories.GENERAL_ENGLISH || it.category == "Oxford Dictionary" }
             } else {
                 filteredByDiff.count { it.category == cat }
             }
@@ -351,7 +351,7 @@ private fun buildOrderedFeed() {
                     word.example.contains(query, ignoreCase = true)
             val matchesCategory = when (category) {
                 VocabCategories.ALL -> true
-                VocabCategories.OXFORD_DICTIONARY -> word.category == VocabCategories.OXFORD_DICTIONARY || word.category == VocabCategories.GENERAL_ENGLISH
+                VocabCategories.GENERAL_ENGLISH -> word.category == VocabCategories.GENERAL_ENGLISH || word.category == "Oxford Dictionary"
                 else -> word.category == category
             }
             matchesTab && matchesQuery && matchesCategory
