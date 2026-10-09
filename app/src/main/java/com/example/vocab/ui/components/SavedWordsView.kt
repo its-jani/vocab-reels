@@ -145,7 +145,7 @@ fun SavedWordsView(
                 Column {
                     Text(
                         text = when (activeTabFilter) {
-                            SavedTabFilter.LIKED -> "Liked Words"
+                            SavedTabFilter.LIKED -> "Saved Words"
                             SavedTabFilter.LEARNED -> "Learned Words"
                             SavedTabFilter.ALL -> "My Word Collection"
                         },
@@ -238,7 +238,7 @@ fun SavedWordsView(
                         modifier = Modifier.size(14.dp)
                     )
                     Text(
-                        text = "Liked ($totalSavedCount)",
+                        text = "Saved ($totalSavedCount)",
                         color = if (isLikedSelected) LightText else MutedText,
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = if (isLikedSelected) FontWeight.Bold else FontWeight.Medium
@@ -412,7 +412,7 @@ fun SavedWordsView(
                         text = if (searchQuery.isNotEmpty()) {
                             "No matching words found"
                         } else when (activeTabFilter) {
-                            SavedTabFilter.LIKED -> "No liked words yet"
+                            SavedTabFilter.LIKED -> "No saved words yet"
                             SavedTabFilter.LEARNED -> "No learned words yet"
                             SavedTabFilter.ALL -> "Your collection is empty"
                         },
@@ -425,9 +425,9 @@ fun SavedWordsView(
                         text = if (searchQuery.isNotEmpty()) {
                             "Try a different search query or clear the filter."
                         } else when (activeTabFilter) {
-                            SavedTabFilter.LIKED -> "Tap the ❤️ heart icon on any card in the reels feed to add words to your liked list."
-                            SavedTabFilter.LEARNED -> "Tap the ✓ Learn button on any card in the reels feed to mark words as learned."
-                            SavedTabFilter.ALL -> "Tap ❤️ Like or ✓ Learn on any word in the reels feed to grow your vocabulary collection."
+                            SavedTabFilter.LIKED -> "Tap the heart icon on any card in the reels feed to save it to your collection."
+                            SavedTabFilter.LEARNED -> "Tap the Learn button on any card in the reels feed to mark words as learned."
+                            SavedTabFilter.ALL -> "Tap Save or Learn on any word in the reels feed to grow your collection."
                         },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MutedText,
@@ -685,7 +685,7 @@ private fun SavedWordCard(
                     ) {
                         Icon(
                             imageVector = if (word.isSaved) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                            contentDescription = if (word.isSaved) "Remove from liked" else "Add to liked",
+                            contentDescription = if (word.isSaved) "Remove from saved" else "Save word",
                             tint = if (word.isSaved) CoralPink else SubtitleText,
                             modifier = Modifier.size(20.dp)
                         )

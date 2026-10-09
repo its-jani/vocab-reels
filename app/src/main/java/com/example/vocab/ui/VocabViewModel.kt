@@ -30,7 +30,7 @@ enum class AppScreenTab {
 
 enum class SavedTabFilter(val label: String) {
     ALL("All"),
-    LIKED("Liked & Saved"),
+    LIKED("Saved"),
     LEARNED("Learned")
 }
 

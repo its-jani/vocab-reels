@@ -152,11 +152,13 @@ fun ReelCard(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 20.dp, end = 74.dp, top = 12.dp, bottom = 16.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
             ) {

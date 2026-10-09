@@ -481,7 +481,7 @@ fun MainMenuBottomSheet(
                                         fontSize = 11.sp
                                     )
                                     Text(
-                                        text = "♥ ${metric.likedWords} liked",
+                                        text = "♥ ${metric.likedWords} saved",
                                         style = MaterialTheme.typography.labelSmall,
                                         color = CoralPink,
                                         fontSize = 11.sp
@@ -534,7 +534,7 @@ fun MainMenuBottomSheet(
                             ) {
                                 Icon(Icons.Default.Favorite, contentDescription = null, tint = CoralPink, modifier = Modifier.size(16.dp))
                                 Spacer(modifier = Modifier.width(6.dp))
-                                Text("Liked Words", style = MaterialTheme.typography.labelMedium, color = LightText)
+                                 Text("Saved Words", style = MaterialTheme.typography.labelMedium, color = LightText)
                             }
                         }
 
