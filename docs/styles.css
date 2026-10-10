@@ -1,0 +1,350 @@
+/* ============ Vocab Reels — landing styles (complements Tailwind CDN) ============ */
+
+html {
+  background-color: #0a0a0b;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- text accents ---- */
+.text-gradient {
+  background: linear-gradient(100deg, #60a5fa 0%, #a78bfa 55%, #e0e7ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.section-eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #60a5fa;
+}
+
+/* ---- nav ---- */
+#nav.nav-scrolled {
+  background: rgba(10, 10, 11, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ---- glowing CTA ---- */
+.btn-glow {
+  box-shadow:
+    0 0 18px rgba(59, 130, 246, 0.45),
+    0 0 46px rgba(59, 130, 246, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+.btn-glow:hover {
+  box-shadow:
+    0 0 26px rgba(59, 130, 246, 0.6),
+    0 0 70px rgba(59, 130, 246, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ---- trust chips ---- */
+.trust-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+.trust-chip:hover {
+  border-color: rgba(96, 165, 250, 0.4);
+  color: #d1d5db;
+}
+
+/* ---- hero ambience ---- */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.45;
+}
+.orb-1 {
+  width: 540px;
+  height: 540px;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-70%);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.55), transparent 65%);
+  animation: drift-1 16s ease-in-out infinite alternate;
+}
+.orb-2 {
+  width: 480px;
+  height: 480px;
+  top: -60px;
+  left: 50%;
+  transform: translateX(10%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.4), transparent 65%);
+  animation: drift-2 20s ease-in-out infinite alternate;
+}
+@keyframes drift-1 {
+  to { transform: translateX(-60%) translateY(40px); }
+}
+@keyframes drift-2 {
+  to { transform: translateX(20%) translateY(-30px); }
+}
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 75%);
+}
+
+/* ---- glass cards ---- */
+.glass-card {
+  position: relative;
+  padding: 1.75rem;
+  border-radius: 1.25rem;
+  border: 1px solid #222226;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)),
+    #101012;
+  backdrop-filter: blur(12px);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-card:hover {
+  border-color: rgba(96, 165, 250, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 50px -20px rgba(59, 130, 246, 0.25);
+}
+
+.icon-chip {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  color: #93c5fd;
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  background: rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 20px -6px rgba(59, 130, 246, 0.4);
+}
+
+/* ---- device frames ---- */
+.hero-showcase {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.device-frame {
+  position: relative;
+  width: 280px;
+  border-radius: 2.6rem;
+  padding: 0.55rem;
+  background: linear-gradient(170deg, #1f1f24, #121215 60%, #1a1a1f);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 40px 90px -30px rgba(0, 0, 0, 0.9),
+    0 0 60px -18px rgba(59, 130, 246, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.device-frame .notch {
+  position: absolute;
+  top: 0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 84px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #0a0a0b;
+  z-index: 2;
+}
+.device-screen {
+  overflow: hidden;
+  border-radius: 2.1rem;
+  background: #0a0a0b;
+  aspect-ratio: 9 / 19.2;
+}
+.device-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.floating-frame.secondary {
+  display: none;
+  position: absolute;
+  width: 220px;
+  right: -40px;
+  top: 70px;
+  transform: rotate(6deg);
+  opacity: 0.9;
+  animation: float-y 7s ease-in-out infinite;
+}
+@media (min-width: 1024px) {
+  .floating-frame.secondary {
+    display: block;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-showcase > .device-frame:first-child {
+    animation: float-y 8s ease-in-out infinite;
+  }
+}
+@keyframes float-y {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -12px; }
+}
+
+/* ---- feature gallery ---- */
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1rem;              /* rounded-2xl */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #101012;
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.85);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.feature-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-4px);
+}
+.feature-media {
+  position: relative;
+  background: #0a0a0b;
+  aspect-ratio: 9 / 15;
+  overflow: hidden;
+}
+.feature-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.feature-card:hover .feature-media img {
+  transform: scale(1.03);
+}
+.feature-body {
+  padding: 1.4rem 1.4rem 1.6rem;
+}
+.feature-tag {
+  display: inline-block;
+  margin-bottom: 0.7rem;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #60a5fa;
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  background: rgba(59, 130, 246, 0.08);
+  border-radius: 9999px;
+  padding: 0.2rem 0.65rem;
+}
+.feature-body h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+.feature-body p {
+  margin-top: 0.55rem;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #a3a3a3;
+}
+
+/* ---- open source panel ---- */
+.oss-panel {
+  border-radius: 1.5rem;
+  border: 1px solid #222226;
+  background:
+    radial-gradient(60% 100% at 0% 0%, rgba(59, 130, 246, 0.08), transparent 60%),
+    #0e0e10;
+  padding: 2.5rem;
+}
+@media (min-width: 768px) {
+  .oss-panel { padding: 3.5rem; }
+}
+.stat-card {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.1rem 1.2rem;
+  text-align: center;
+}
+.stat-label {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #737373;
+}
+.stat-value {
+  margin-top: 0.5rem;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.license-value {
+  color: #93c5fd;
+}
+.stat-note {
+  margin-top: 0.25rem;
+  font-size: 11px;
+  color: #525252;
+}
+
+/* ---- final CTA ---- */
+.cta-banner {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
+    #0e0e10;
+}
+.cta-glow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -140px;
+  height: 280px;
+  width: 70%;
+  border-radius: 9999px;
+  background: radial-gradient(ellipse, rgba(59, 130, 246, 0.28), transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+/* ---- scroll reveal ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .floating-frame.secondary,
+  .hero-showcase > .device-frame:first-child {
+    animation: none;
+  }
+}
