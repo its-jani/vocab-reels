@@ -1,11 +1,55 @@
 /* ============ Vocab Reels — landing styles (complements Tailwind CDN) ============ */
 
+/* ---- scrollcraft tokens: theme the engine to this brand ----
+   Six colour roles + two fonts is the whole surface area. The engine itself
+   (docs/scrollcraft/scrollcraft.*) is never edited per project. */
+:root {
+  --sc-canvas:       #0a0a0b;
+  --sc-surface:      #101012;
+  --sc-ink:          #ffffff;
+  --sc-ink-soft:     #a3a3a3;
+  --sc-accent:       #3b82f6;
+  --sc-accent-ink:   #0a0a0b;
+
+  --sc-font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --sc-font-text:    "Inter", ui-sans-serif, system-ui, sans-serif;
+  --sc-font-mono:    "JetBrains Mono", ui-monospace, monospace;
+
+  --sc-shadow-color: 222 47% 3%;
+}
+
+/* The engine sets body{background:var(--sc-canvas)}; make sure the html ground
+   matches so the page never flashes white before the CSS variable resolves. */
 html {
   background-color: #0a0a0b;
 }
 
-body {
-  -webkit-font-smoothing: antialiased;
+/* Keep ambient hero orbs outside of the layout flow so parallax translate does
+   not push them past the section's overflow clip. */
+.hero-bg .orb {
+  will-change: transform;
+}
+
+/* Scroll progress bar sits above the nav; bump it over the fixed header. */
+[data-sc-progress] {
+  z-index: 60;
+  height: 2px;
+}
+
+/* Soften the film grain so it stays atmosphere on a dark UI, not noise. */
+.sc-grain {
+  opacity: 0.035;
+  mix-blend-mode: screen;
+}
+
+/* Icon-chip magnet drift should not fight the hover-lift on glass-card. */
+.glass-card .icon-chip {
+  will-change: transform;
+}
+
+/* The device-frame spotlight is additive to the existing blue glow. */
+.device-frame[data-sc-spotlight]::after {
+  z-index: 3;
 }
 
 /* ---- text accents ---- */

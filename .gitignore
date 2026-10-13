@@ -18,3 +18,4 @@ local.properties
 debug.keystore
 graphify-out/
 .impeccable
+.qoder/

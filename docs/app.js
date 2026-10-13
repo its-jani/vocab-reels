@@ -2,6 +2,21 @@
 (() => {
   'use strict';
 
+  /* ---- boot scrollcraft engine (docs/scrollcraft/scrollcraft.js) ----
+     The engine owns all scroll-driven behaviour now:
+       - flow reveals ([data-sc-in] + [data-sc-stagger])
+       - cue opacity windows inside [data-sc-act]
+       - parallax on hero orbs / floating frame
+       - kinetic line split on the hero headline
+       - background drift across section colours
+       - scroll progress bar
+       - pointer devices: spotlight on device frame, magnet on icon chips
+       - entry counters ([data-sc-count] outside any act)
+     It honours prefers-reduced-motion by default. */
+  if (window.ScrollCraft && typeof window.ScrollCraft.mount === 'function') {
+    window.ScrollCraft.mount(document.body, { lerp: 0.2 });
+  }
+
   /* ---- sticky nav: add blur/border after scrolling ---- */
   const nav = document.getElementById('nav');
   const onScroll = () => {
@@ -9,25 +24,6 @@
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
-
-  /* ---- scroll reveal for cards / panels ---- */
-  const revealEls = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    revealEls.forEach((el) => io.observe(el));
-  } else {
-    revealEls.forEach((el) => el.classList.add('is-visible'));
-  }
 
   /* ---- live GitHub stars (graceful fallback to placeholder) ---- */
   const starsEl = document.getElementById('gh-stars');
