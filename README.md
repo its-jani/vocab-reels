@@ -1,115 +1,246 @@
 <div align="center">
 
+<img src="docs/assets/favicon.svg" width="104" alt="VocabReels logo" />
+
 # 🎬 VocabReels
 
-**Master English Vocabulary with an Addictive, Reels-Style Micro-Learning Experience powered by Gemini AI.**
+**Swipe. Learn. Grow.** — master English vocabulary through an addictive, reels-style micro-learning experience.
 
-[![Android](https://img.shields.io/badge/Platform-Android%207.0%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/its-jani/vocab-reels)
-[![Kotlin](https://img.shields.io/badge/Language-Kotlin%202.0-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
-[![Jetpack Compose](https://img.shields.io/badge/UI-Jetpack%20Compose%20%26%20Material%203-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
-[![Gemini AI](https://img.shields.io/badge/AI-Google%20Gemini%20API-FF6F00?style=for-the-badge&logo=googlegemini&logoColor=white)](https://ai.google.dev/)
-[![GitHub Release](https://img.shields.io/github/v/release/its-jani/vocab-reels?style=for-the-badge&color=2ea44f&logo=github)](https://github.com/its-jani/vocab-reels/releases/latest)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.style=for-the-badge)](LICENSE)
+<p>
+  <a href="https://github.com/its-jani/vocab-reels/releases/latest"><img src="https://img.shields.io/badge/Platform-Android%207.0%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android 7.0+" /></a>
+  <a href="https://kotlinlang.org/"><img src="https://img.shields.io/badge/Language-Kotlin%202.2-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin 2.2" /></a>
+  <a href="https://developer.android.com/jetpack/compose"><img src="https://img.shields.io/badge/UI-Jetpack%20Compose%20%26%20Material%203-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white" alt="Jetpack Compose & Material 3" /></a>
+</p>
+<p>
+  <a href="https://developer.android.com/training/data-storage/room"><img src="https://img.shields.io/badge/Storage-Room%20%2B%20SQLite-6750A4?style=for-the-badge&logo=sqlite&logoColor=white" alt="Room + SQLite" /></a>
+  <a href="https://github.com/its-jani/vocab-reels/releases/latest"><img src="https://img.shields.io/github/v/release/its-jani/vocab-reels?style=for-the-badge&color=2ea44f&logo=github" alt="GitHub Release" /></a>
+  <a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge" alt="Apache 2.0 License" /></a>
+</p>
 
-<br/>
-
-<p align="center">
+<p>
   <a href="https://github.com/its-jani/vocab-reels/releases/latest">
-    <img src="https://img.shields.io/badge/📲%20Download-Latest%20APK%20(Direct%20Install)-2ea44f?style=for-the-badge&logo=android&logoColor=white" alt="Download APK" height="48" />
+    <img src="https://img.shields.io/badge/📲%20Download-Latest%20APK%20%28Direct%20Install%29-2ea44f?style=for-the-badge&logo=android&logoColor=white" alt="Download APK" height="48" />
   </a>
+</p>
+
+<table>
+  <tr>
+    <td align="center"><b>5,319</b><br /><sub>words onboard</sub></td>
+    <td align="center"><b>11</b><br /><sub>curated lists</sub></td>
+    <td align="center"><b>3</b><br /><sub>difficulty levels</sub></td>
+    <td align="center"><b>100%</b><br /><sub>offline</sub></td>
+    <td align="center"><b>0</b><br /><sub>ads &amp; trackers</sub></td>
+  </tr>
+</table>
+
+<p>
+  <sub>
+    <a href="#overview">Overview</a> &nbsp;·&nbsp;
+    <a href="#showcase">App Showcase</a> &nbsp;·&nbsp;
+    <a href="#download">Download</a> &nbsp;·&nbsp;
+    <a href="#tech-stack">Tech Stack</a> &nbsp;·&nbsp;
+    <a href="#build">Build from Source</a> &nbsp;·&nbsp;
+    <a href="#contributing">Contributing</a>
+  </sub>
 </p>
 
 </div>
 
 ---
 
+<a name="overview"></a>
 ## 📌 Overview
 
-**VocabReels** transforms the way you learn vocabulary. Instead of boring flashcard decks or bulky dictionary apps, VocabReels brings the addictive, smooth swipe gestures of short-form video reels (TikTok / Instagram Reels / YouTube Shorts) directly to vocabulary learning.
+**VocabReels** replaces mindless scrolling with effortless learning. Instead of boring flashcard decks or bulky dictionary apps, it wraps **5,319 words** in the addictive vertical swipe of short-form video reels.
 
-Swipe through beautifully designed word cards, listen to crystal-clear native pronunciations, get smart AI-powered context explanations from Google Gemini, track daily goals, and quiz yourself to achieve lasting retention!
-
-<p align="center">
-  <img src="screenshots/01_vocab_card.jpg" alt="VocabReels word card — Mogging" width="280" />
-  <br/>
-  <em>The core reels-style word card — swipe through 5,319+ words with definitions, examples & confidence rating</em>
-</p>
+Swipe through beautifully designed word cards, tap to hear crystal-clear pronunciations, look up any word instantly, and let the streak-based dashboard keep you coming back every day. No login. No internet. No excuses.
 
 ---
 
+<a name="showcase"></a>
+## 📱 App Showcase
+
+<table>
+  <tr>
+    <td width="60%" valign="top">
+
+<h3>🎞️ Reels-Style Word Cards</h3>
+
+<p>The core loop — a full-screen, swipeable feed of word cards that feels just like your favorite shorts app.</p>
+
+<ul>
+  <li>Word, phonetics, part of speech, definition &amp; a real-world example on every card</li>
+  <li>One tap to hear crystal-clear TTS pronunciation</li>
+  <li>Save ♥, mark as learned ✓, or copy any word from the action rail</li>
+  <li>Rate your confidence 1–5★ and watch mastery grow</li>
+</ul>
+
+    </td>
+    <td width="40%" valign="top">
+
+<p align="center">
+  <a href="screenshots/01_word_card.jpg"><img src="screenshots/01_word_card.jpg" width="270" alt="VocabReels word card — Altruist: definition, example context, confidence rating and action rail" /></a><br />
+  <sub>The reel — word, definition, example &amp; confidence</sub>
+</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td width="40%" valign="top">
+
+<p align="center">
+  <a href="screenshots/02_categories.jpg"><img src="screenshots/02_categories.jpg" width="270" alt="Grouped category picker — Everyday &amp; Dictionary, Career &amp; Business, Specialist &amp; Academic, Modern &amp; Conversational" /></a><br />
+  <sub>Grouped picker — 11 lists, 5,319 words</sub>
+</p>
+
+    </td>
+    <td width="60%" valign="top">
+
+<h3>🗂️ Multi-Category Study</h3>
+
+<p><b>11 curated lists — 5,319 words</b> — grouped so you always study exactly what you need.</p>
+
+<ul>
+  <li><i>Everyday &amp; Dictionary · Career &amp; Business · Specialist &amp; Academic · Modern &amp; Conversational</i></li>
+  <li>From Gen Z slang to medical, business &amp; startup jargon</li>
+  <li>Filter the feed by difficulty — Easy, Intermediate or Hard</li>
+  <li>Pre-packaged database: every list works fully offline</li>
+</ul>
+
+    </td>
+  </tr>
+  <tr>
+    <td width="60%" valign="top">
+
+<h3>🔍 Instant Dictionary Lookup</h3>
+
+<p>Search any of the 5,319 words for its meaning and an example sentence — without leaving the feed.</p>
+
+<ul>
+  <li>One-tap lookup: meaning + sentence, instantly</li>
+  <li>Popular-word suggestions to get you started</li>
+  <li>Opens right over the reel — no digging through decks</li>
+</ul>
+
+    </td>
+    <td width="40%" valign="top">
+
+<p align="center">
+  <a href="screenshots/03_lookup.jpg"><img src="screenshots/03_lookup.jpg" width="270" alt="Dictionary &amp; Word Lookup dialog with search field and quick word suggestions" /></a><br />
+  <sub>Instant lookup, right over the feed</sub>
+</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td width="40%" valign="top">
+
+<p align="center">
+  <a href="screenshots/04_dashboard.jpg"><img src="screenshots/04_dashboard.jpg" width="270" alt="Learning dashboard — today's activity, day streak, consistency and daily goal progress" /></a><br />
+  <sub>Streaks, goals &amp; consistency</sub>
+</p>
+
+    </td>
+    <td width="60%" valign="top">
+
+<h3>🔥 Progress, Streaks &amp; Daily Goals</h3>
+
+<p>A learning dashboard engineered to keep the habit alive.</p>
+
+<ul>
+  <li>Set a daily word goal and watch the progress bar fill up</li>
+  <li>Streak tracking with best-streak memory &amp; a consistency score</li>
+  <li>Scrolled vs. learned stats, compared against yesterday</li>
+  <li>Satisfying <i>“Today’s Goal Completed! 🎯”</i> moments that build the habit</li>
+</ul>
+
+    </td>
+  </tr>
+  <tr>
+    <td width="60%" valign="top">
+
+<h3>📊 Category Progress &amp; Quick Actions</h3>
+
+<p>See exactly how far you’ve come — and jump straight back in.</p>
+
+<ul>
+  <li>Per-category completion bars with learned ✓ / liked ♥ counts</li>
+  <li>One-tap quick actions: Liked Words, Learned Words, Set Daily Goal, Shuffle Feed</li>
+  <li>Shuffle the deck for a brand-new session, every time</li>
+</ul>
+
+    </td>
+    <td width="40%" valign="top">
+
+<p align="center">
+  <a href="screenshots/05_dashboard_progress.jpg"><img src="screenshots/05_dashboard_progress.jpg" width="270" alt="Learning dashboard — per-category progress cards and quick actions" /></a><br />
+  <sub>Category mastery &amp; quick actions</sub>
+</p>
+
+    </td>
+  </tr>
+</table>
+
+### ✨ More Highlights
+
+- 🔊 **Native pronunciation** — instant text-to-speech for every word and example sentence
+- 📚 **Bring your own words** — import &amp; export custom word lists as JSON
+- ⚡ **Truly offline-first** — the entire dictionary ships inside the APK
+- 🎨 **Material 3 dark theme** — glassmorphism accents &amp; high-contrast typography
+- 🆓 **Free forever** — no account, no ads, no paywall
+
+---
+
+<a name="download"></a>
 ## 🚀 Download & Installation
 
-You can download and install the app on any Android device directly from the repository's **Releases** section:
+You can install the app on any Android **7.0+** device directly from the repository's **Releases** section:
 
 ### 👉 **[Download the Latest VocabReels APK](https://github.com/its-jani/vocab-reels/releases/latest)**
 
-### 📲 Step-by-Step Installation Guide:
-1. **Download APK**: Tap the green **Download Latest APK** button above (or navigate to the [Releases](https://github.com/its-jani/vocab-reels/releases) tab and download `VocabReels-v*.apk` under **Assets**).
-2. **Open File**: When the download finishes, tap the downloaded file in your browser's download manager or from your device's **Files / Downloads** folder.
-3. **Allow Installation**:
-   - If prompted with *"For your security, your phone is not allowed to install unknown apps from this source"*, tap **Settings** and toggle **Allow from this source** to ON.
-4. **Install & Launch**: Tap **Install**. Once finished, tap **Open** to start mastering words!
+<details>
+<summary><b>📲 Step-by-step installation guide</b></summary>
+
+<br/>
+
+1. **Download APK** — tap the green **Download Latest APK** button above (or open the [Releases](https://github.com/its-jani/vocab-reels) tab and download `VocabReels-v*.apk` under **Assets**).
+2. **Open File** — when the download finishes, tap the downloaded file in your browser's download manager or from your device's **Files / Downloads** folder.
+3. **Allow Installation** — if prompted with *"For your security, your phone is not allowed to install unknown apps from this source"*, tap **Settings** and toggle **Allow from this source** to ON.
+4. **Install & Launch** — tap **Install**. Once finished, tap **Open** to start mastering words!
+
+</details>
 
 ---
 
-## ✨ Key Features
+<a name="tech-stack"></a>
+## 🛠️ Tech Stack
 
-| Feature | Description |
+| Layer | Technology |
 | :--- | :--- |
-| 📱 **Reels-Style Vertical Feed** | Swipe up and down seamlessly between interactive vocabulary cards with fluid animations and haptic feedback. |
-| 🔊 **Native Pronunciation (TTS)** | Instant text-to-speech audio pronunciation for every word, phonetics, and example sentences. |
-| 🤖 **Gemini AI Tutor** | On-demand AI explanations, real-world context, origin/etymology, and memory mnemonics powered by Google Gemini. |
-| 🎯 **Daily Goals & Streak Tracking** | Set daily word targets (e.g., 10, 20, or 50 words/day), maintain daily learning streaks, and stay motivated. |
-| 🧠 **Confidence Rating & Smart SRS** | Rate words as *Learning*, *Reviewing*, or *Mastered* to intelligently prioritize your practice sessions. |
-| 📚 **Curated Categories** | Study lists tailored for **Oxford 3000**, **GRE**, **SAT**, **TOEFL / IELTS**, **Business English**, **Idioms**, and **Daily Conversation**. |
-| 🔍 **Instant Search & Bookmarks** | Quickly search for words, view detailed definitions, and bookmark difficult words for quick revision. |
-| ⚡ **Offline-First Architecture** | Pre-packaged SQLite/Room database ensures you can study anywhere, even with zero internet connection. |
-| 🎨 **Material 3 Modern Dark Theme** | Curated color palettes, glassmorphism accents, and comfortable high-contrast typography for night reading. |
+| **Architecture** | Modern Android MVVM · single-activity · 100% Kotlin |
+| **UI** | [Jetpack Compose](https://developer.android.com/jetpack/compose) & Material 3 (dark theme) |
+| **Language** | Kotlin 2.2 with Coroutines & Flow |
+| **Persistence** | [Room](https://developer.android.com/training/data-storage/room) + SQLite — pre-packaged, offline-first |
+| **Audio** | Android TextToSpeech engine |
+| **Build** | Gradle version catalogs · KSP · Secrets plugin |
+| **CI/CD** | GitHub Actions — build validation & automated APK releases |
+
+> 🤖 **AI-ready scaffold**: [Firebase AI (Gemini)](https://firebase.google.com/docs/ai), Retrofit, OkHttp & Moshi are already wired into the Gradle build for upcoming AI-powered features — no key or internet needed to build and run the app as-is.
 
 ---
 
-## 📸 App Screenshots
-
-<p align="center">
-  <img src="screenshots/01_vocab_card.jpg" alt="Vocab Card — Reels Feed" width="200" />
-  &nbsp;&nbsp;
-  <img src="screenshots/02_categories.jpg" alt="Category Selector" width="200" />
-  &nbsp;&nbsp;
-  <img src="screenshots/03_search.jpg" alt="Dictionary & Word Search" width="200" />
-</p>
-<p align="center">
-  <em>Vocab reels card &nbsp;|&nbsp; Category selector (5,319 words across 10 lists) &nbsp;|&nbsp; Instant word search</em>
-</p>
-
-<p align="center">
-  <img src="screenshots/04_dashboard_1.jpg" alt="Learning Dashboard — Activity & Streak" width="200" />
-  &nbsp;&nbsp;
-  <img src="screenshots/05_dashboard_2.jpg" alt="Learning Dashboard — Categories & Quick Actions" width="200" />
-</p>
-<p align="center">
-  <em>Daily activity & 7-day streak tracking &nbsp;|&nbsp; Per-category progress & quick actions</em>
-</p>
-
----
-
-## 🛠️ Tech Stack & Architecture
-
-- **Architecture**: Modern Android MVVM (Model-View-ViewModel) + Single-Activity Architecture
-- **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) & Material 3
-- **Language**: Kotlin 2.0 with Kotlin Coroutines & Flow
-- **Local Persistence**: Android Jetpack [Room Database](https://developer.android.com/training/data-storage/room) & SQLite
-- **AI Integration**: Google Generative AI (Gemini API) & Firebase AI
-- **Networking & Serialization**: Retrofit 2, OkHttp 3, Moshi
-- **CI/CD**: GitHub Actions for automated compilation and release APK generation
-
----
-
+<a name="build"></a>
 ## 💻 Building from Source (For Developers)
+
+<details>
+<summary><b>Expand for build instructions</b></summary>
+
+<br/>
 
 ### Prerequisites
 - [Android Studio Ladybug (2024.2+) or newer](https://developer.android.com/studio)
-- JDK 17 or JDK 21
-- Android SDK Platform 34 / 36
+- JDK 17 or newer
+- Android SDK Platform 36
 
 ### 1. Clone the repository
 ```bash
@@ -117,16 +248,12 @@ git clone https://github.com/its-jani/vocab-reels.git
 cd vocab-reels
 ```
 
-### 2. Configure Gemini API Key
-Create a `.env` file in the project root:
+### 2. Configure the Gemini API key *(optional)*
+Only needed if you plan to enable AI-powered features — the app builds and runs fully offline without it:
 ```bash
 cp .env.example .env
 ```
-Open `.env` and add your Gemini API Key:
-```env
-GEMINI_API_KEY=your_actual_gemini_api_key_here
-```
-> *(Get your free Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey))*
+Open `.env`, uncomment `GEMINI_API_KEY`, and add your key from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
 ### 3. Build & Run
 - **Build Debug APK:**
@@ -146,13 +273,15 @@ GEMINI_API_KEY=your_actual_gemini_api_key_here
   ./gradlew installDebug
   ```
 
+</details>
+
 ---
 
 ## 📦 Automated Releases via GitHub Actions
 
 This repository includes automated CI/CD workflows:
-- **Build Validation (`build.yml`)**: Compiles and tests every push and pull request to `main`.
-- **Release Automation (`release.yml`)**: Whenever a Git tag matching `v*` (e.g. `v1.0.0`) is pushed, GitHub Actions automatically builds the optimized release APK and publishes a new **GitHub Release** with the APK asset ready for direct download.
+- **Build Validation (`build.yml`)**: compiles and tests every push and pull request to `main`.
+- **Release Automation (`release.yml`)**: whenever a Git tag matching `v*` (e.g. `v1.0.0`) is pushed, GitHub Actions automatically builds the optimized release APK and publishes a new **GitHub Release** with the APK asset ready for direct download.
 
 To publish a new release:
 ```bash
@@ -162,6 +291,7 @@ git push origin v1.0.0
 
 ---
 
+<a name="contributing"></a>
 ## 🤝 Contributing
 
 Contributions, feature suggestions, and bug reports are welcome!
@@ -175,4 +305,4 @@ Contributions, feature suggestions, and bug reports are welcome!
 
 ## 📄 License
 
-Distributed under the Apache 2.0 License. See `LICENSE` for more information.
+Distributed under the **Apache 2.0 License** — see the [license text](https://www.apache.org/licenses/LICENSE-2.0) for more information.
