@@ -23,15 +23,13 @@
   </a>
 </p>
 
-<table>
-  <tr>
-    <td align="center"><b>5,319</b><br /><sub>words onboard</sub></td>
-    <td align="center"><b>11</b><br /><sub>curated lists</sub></td>
-    <td align="center"><b>3</b><br /><sub>difficulty levels</sub></td>
-    <td align="center"><b>100%</b><br /><sub>offline</sub></td>
-    <td align="center"><b>0</b><br /><sub>ads &amp; trackers</sub></td>
-  </tr>
-</table>
+<p>
+  <b>5,319</b> words onboard &nbsp;·&nbsp;
+  <b>11</b> curated lists &nbsp;·&nbsp;
+  <b>3</b> difficulty levels &nbsp;·&nbsp;
+  <b>100%</b> offline &nbsp;·&nbsp;
+  <b>0</b> ads &amp; trackers
+</p>
 
 <p>
   <sub>
@@ -60,126 +58,96 @@ Swipe through beautifully designed word cards, tap to hear crystal-clear pronunc
 <a name="showcase"></a>
 ## 📱 App Showcase
 
-<table>
-  <tr>
-    <td width="60%" valign="top">
+### 🎞️ Reels-Style Word Cards
 
-<h3>🎞️ Reels-Style Word Cards</h3>
+The core loop — a full-screen, swipeable feed of word cards
+that feels just like your favorite shorts app.
 
-<p>The core loop — a full-screen, swipeable feed of word cards that feels just like your favorite shorts app.</p>
+- Word, phonetics, part of speech, definition & a real-world example on every card
+- One tap to hear crystal-clear TTS pronunciation
+- Save ♥, mark as learned ✓, or copy any word from the action rail
+- Rate your confidence 1–5★ and watch mastery grow
 
-<ul>
-  <li>Word, phonetics, part of speech, definition &amp; a real-world example on every card</li>
-  <li>One tap to hear crystal-clear TTS pronunciation</li>
-  <li>Save ♥, mark as learned ✓, or copy any word from the action rail</li>
-  <li>Rate your confidence 1–5★ and watch mastery grow</li>
-</ul>
-
-    </td>
-    <td width="40%" valign="top">
-
-<p align="center">
-  <a href="screenshots/01_word_card.jpg"><img src="screenshots/01_word_card.jpg" width="270" alt="VocabReels word card — Altruist: definition, example context, confidence rating and action rail" /></a><br />
+<div align="center">
+  <a href="screenshots/01_word_card.jpg">
+    <img src="screenshots/01_word_card.jpg" width="270"
+      alt="VocabReels word card — Altruist with definition, example and action rail" />
+  </a>
+  <br />
   <sub>The reel — word, definition, example &amp; confidence</sub>
-</p>
+</div>
 
-    </td>
-  </tr>
-  <tr>
-    <td width="40%" valign="top">
+### 🗂️ Multi-Category Study
 
-<p align="center">
-  <a href="screenshots/02_categories.jpg"><img src="screenshots/02_categories.jpg" width="270" alt="Grouped category picker — Everyday &amp; Dictionary, Career &amp; Business, Specialist &amp; Academic, Modern &amp; Conversational" /></a><br />
+**11 curated lists — 5,319 words** — grouped so you always study
+exactly what you need.
+
+- *Everyday & Dictionary · Career & Business · Specialist & Academic · Modern & Conversational*
+- From Gen Z slang to medical, business & startup jargon
+- Filter the feed by difficulty — Easy, Intermediate or Hard
+- Pre-packaged database: every list works fully offline
+
+<div align="center">
+  <a href="screenshots/02_categories.jpg">
+    <img src="screenshots/02_categories.jpg" width="270"
+      alt="Grouped category picker — Everyday, Career, Specialist and Modern lists" />
+  </a>
+  <br />
   <sub>Grouped picker — 11 lists, 5,319 words</sub>
-</p>
+</div>
 
-    </td>
-    <td width="60%" valign="top">
+### 🔍 Instant Dictionary Lookup
 
-<h3>🗂️ Multi-Category Study</h3>
+Search any of the 5,319 words for its meaning and an example
+sentence — without leaving the feed.
 
-<p><b>11 curated lists — 5,319 words</b> — grouped so you always study exactly what you need.</p>
+- One-tap lookup: meaning + sentence, instantly
+- Popular-word suggestions to get you started
+- Opens right over the reel — no digging through decks
 
-<ul>
-  <li><i>Everyday &amp; Dictionary · Career &amp; Business · Specialist &amp; Academic · Modern &amp; Conversational</i></li>
-  <li>From Gen Z slang to medical, business &amp; startup jargon</li>
-  <li>Filter the feed by difficulty — Easy, Intermediate or Hard</li>
-  <li>Pre-packaged database: every list works fully offline</li>
-</ul>
-
-    </td>
-  </tr>
-  <tr>
-    <td width="60%" valign="top">
-
-<h3>🔍 Instant Dictionary Lookup</h3>
-
-<p>Search any of the 5,319 words for its meaning and an example sentence — without leaving the feed.</p>
-
-<ul>
-  <li>One-tap lookup: meaning + sentence, instantly</li>
-  <li>Popular-word suggestions to get you started</li>
-  <li>Opens right over the reel — no digging through decks</li>
-</ul>
-
-    </td>
-    <td width="40%" valign="top">
-
-<p align="center">
-  <a href="screenshots/03_lookup.jpg"><img src="screenshots/03_lookup.jpg" width="270" alt="Dictionary &amp; Word Lookup dialog with search field and quick word suggestions" /></a><br />
+<div align="center">
+  <a href="screenshots/03_lookup.jpg">
+    <img src="screenshots/03_lookup.jpg" width="270"
+      alt="Word lookup dialog with search field and quick suggestions" />
+  </a>
+  <br />
   <sub>Instant lookup, right over the feed</sub>
-</p>
+</div>
 
-    </td>
-  </tr>
-  <tr>
-    <td width="40%" valign="top">
+### 🔥 Progress, Streaks & Daily Goals
 
-<p align="center">
-  <a href="screenshots/04_dashboard.jpg"><img src="screenshots/04_dashboard.jpg" width="270" alt="Learning dashboard — today's activity, day streak, consistency and daily goal progress" /></a><br />
+A learning dashboard engineered to keep the habit alive.
+
+- Set a daily word goal and watch the progress bar fill up
+- Streak tracking with best-streak memory & a consistency score
+- Scrolled vs. learned stats, compared against yesterday
+- Satisfying *“Today’s Goal Completed! 🎯”* moments that build the habit
+
+<div align="center">
+  <a href="screenshots/04_dashboard.jpg">
+    <img src="screenshots/04_dashboard.jpg" width="270"
+      alt="Learning dashboard — streak, consistency and daily goal progress" />
+  </a>
+  <br />
   <sub>Streaks, goals &amp; consistency</sub>
-</p>
+</div>
 
-    </td>
-    <td width="60%" valign="top">
+### 📊 Category Progress & Quick Actions
 
-<h3>🔥 Progress, Streaks &amp; Daily Goals</h3>
+See exactly how far you’ve come — and jump straight back in.
 
-<p>A learning dashboard engineered to keep the habit alive.</p>
+- Per-category completion bars with learned ✓ / liked ♥ counts
+- One-tap quick actions: Liked Words, Learned Words, Set Daily Goal, Shuffle Feed
+- Shuffle the deck for a brand-new session, every time
 
-<ul>
-  <li>Set a daily word goal and watch the progress bar fill up</li>
-  <li>Streak tracking with best-streak memory &amp; a consistency score</li>
-  <li>Scrolled vs. learned stats, compared against yesterday</li>
-  <li>Satisfying <i>“Today’s Goal Completed! 🎯”</i> moments that build the habit</li>
-</ul>
-
-    </td>
-  </tr>
-  <tr>
-    <td width="60%" valign="top">
-
-<h3>📊 Category Progress &amp; Quick Actions</h3>
-
-<p>See exactly how far you’ve come — and jump straight back in.</p>
-
-<ul>
-  <li>Per-category completion bars with learned ✓ / liked ♥ counts</li>
-  <li>One-tap quick actions: Liked Words, Learned Words, Set Daily Goal, Shuffle Feed</li>
-  <li>Shuffle the deck for a brand-new session, every time</li>
-</ul>
-
-    </td>
-    <td width="40%" valign="top">
-
-<p align="center">
-  <a href="screenshots/05_dashboard_progress.jpg"><img src="screenshots/05_dashboard_progress.jpg" width="270" alt="Learning dashboard — per-category progress cards and quick actions" /></a><br />
+<div align="center">
+  <a href="screenshots/05_dashboard_progress.jpg">
+    <img src="screenshots/05_dashboard_progress.jpg" width="270"
+      alt="Learning dashboard — per-category progress cards and quick actions" />
+  </a>
+  <br />
   <sub>Category mastery &amp; quick actions</sub>
-</p>
-
-    </td>
-  </tr>
-</table>
+</div>
 
 ### ✨ More Highlights
 
