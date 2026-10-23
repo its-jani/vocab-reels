@@ -199,12 +199,12 @@ class VocabViewModel(application: Application) : AndroidViewModel(application) {
         .map { it?.wordsLearned ?: 0 }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
-    val streakDays: StateFlow<Int> = combine(allDailyStats, dailyGoal, wordsLearnedToday) { stats, goal, learnedToday ->
-        calculateStreak(stats, goal, learnedToday)
+    val streakDays: StateFlow<Int> = combine(allDailyStats, dailyGoal) { stats, goal ->
+        streakState(stats, goal).currentStreak
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     val bestStreakDays: StateFlow<Int> = combine(allDailyStats, dailyGoal) { stats, goal ->
-        calculateBestStreak(stats, goal)
+        streakState(stats, goal).bestStreak
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     val overallConsistencyPercent: StateFlow<Int> = combine(allDailyStats, dailyGoal) { stats, goal ->
@@ -571,74 +571,17 @@ private fun buildOrderedFeed() {
         ttsManager.shutdown()
     }
 
-    private fun calculateStreak(stats: List<DailyStats>, goal: Int, learnedToday: Int): Int {
-        val todayMet = learnedToday >= goal
-        val statsMap = stats.associateBy { it.date }
-        val yesterdayDate = repository.getYesterdayDateString()
-        val yesterdayStat = statsMap[yesterdayDate]
-        val yesterdayMet = yesterdayStat != null && yesterdayStat.wordsLearned >= goal
-
-        if (!todayMet && !yesterdayMet) return 0
-
-        var streak = if (todayMet) 1 else 0
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.DAY_OF_YEAR, -1)
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-        while (true) {
-            val dStr = sdf.format(cal.time)
-            val s = statsMap[dStr]
-            val met = s != null && s.wordsLearned >= goal
-            if (met) {
-                if (!todayMet && streak == 0) {
-                    streak = 1
-                } else {
-                    streak++
-                }
-                cal.add(Calendar.DAY_OF_YEAR, -1)
-            } else {
-                break
-            }
-        }
-        return streak
-    }
-
-    private fun calculateBestStreak(stats: List<DailyStats>, goal: Int): Int {
-        if (stats.isEmpty()) return 0
-        val sorted = stats.sortedBy { it.date }
-        var best = 0
-        var current = 0
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        var prevCal: Calendar? = null
-
-        for (stat in sorted) {
-            val met = stat.wordsLearned >= goal
-            if (!met) {
-                current = 0
-                prevCal = null
-                continue
-            }
-            val cal = Calendar.getInstance()
-            try {
-                cal.time = sdf.parse(stat.date) ?: continue
-            } catch (e: Exception) {
-                continue
-            }
-            if (prevCal == null) {
-                current = 1
-            } else {
-                val diffDays = ((cal.timeInMillis - prevCal.timeInMillis) / (1000 * 60 * 60 * 24)).toInt()
-                if (diffDays == 1) {
-                    current++
-                } else if (diffDays == 0) {
-                    // Same date record
-                } else {
-                    current = 1
-                }
-            }
-            prevCal = cal
-            if (current > best) best = current
-        }
-        return best
-    }
+    // Streak semantics are owned by the shared StreakStateMachine (single source
+    // of truth with the home screen Streak & Goal widget). Days are compared on
+    // UTC epoch-day boundaries derived from local calendar dates, so timezone
+    // and DST shifts cannot spoof the streak; a missed day resets it to 0.
+    private fun streakState(
+        stats: List<DailyStats>,
+        goal: Int
+    ): com.example.vocab.util.StreakStateMachine.StreakState =
+        com.example.vocab.util.StreakStateMachine.evaluate(
+            learnedByDate = stats.associate { it.date to it.wordsLearned },
+            dailyGoal = goal,
+            today = todayDateStr
+        )
 }

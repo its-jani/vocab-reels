@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Vocab Reels</string>
+    <string name="widget_streak_label">Streak &amp; Daily Goal</string>
+    <string name="widget_streak_description">Shows your current streak and today\'s goal status. Tap to jump straight into today\'s activity.</string>
 </resources>

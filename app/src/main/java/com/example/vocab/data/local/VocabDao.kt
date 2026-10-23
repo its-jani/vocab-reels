@@ -72,6 +72,9 @@ interface VocabDao {
     @Query("SELECT * FROM user_learning_goal WHERE id = 1 LIMIT 1")
     fun getLearningGoal(): Flow<UserLearningGoal?>
 
+    @Query("SELECT * FROM user_learning_goal WHERE id = 1 LIMIT 1")
+    suspend fun getLearningGoalSnapshot(): UserLearningGoal?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun setLearningGoal(goal: UserLearningGoal)
 
@@ -89,6 +92,9 @@ interface VocabDao {
 
     @Query("SELECT * FROM daily_learning_stats ORDER BY date DESC")
     fun getAllDailyStats(): Flow<List<DailyStats>>
+
+    @Query("SELECT * FROM daily_learning_stats ORDER BY date DESC LIMIT 366")
+    suspend fun getDailyStatsHistorySnapshot(): List<DailyStats>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrUpdateDailyStats(stats: DailyStats)

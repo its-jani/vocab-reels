@@ -23,8 +23,8 @@ android {
     val envVersionCode = System.getenv("VERSION_CODE")?.toIntOrNull()
       ?: (project.findProperty("versionCode") as? String)?.toIntOrNull()
 
-    versionCode = envVersionCode ?: 7
-    versionName = envVersionName ?: "1.3.3"
+    versionCode = envVersionCode ?: 8
+    versionName = envVersionName ?: "1.3.4"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -130,6 +130,8 @@ dependencies {
   implementation(libs.androidx.compose.ui.graphics)
   implementation(libs.androidx.compose.ui.tooling.preview)
   implementation(libs.androidx.core.ktx)
+  implementation(libs.androidx.glance)
+  implementation(libs.androidx.glance.appwidget)
   // implementation(libs.androidx.datastore.preferences)
   implementation(libs.androidx.lifecycle.runtime.compose)
   implementation(libs.androidx.lifecycle.runtime.ktx)

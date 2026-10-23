@@ -120,6 +120,7 @@ A learning dashboard engineered to keep the habit alive.
 
 - Set a daily word goal and watch the progress bar fill up
 - Streak tracking with best-streak memory & a consistency score
+- 🔥 **Home screen widget** — streak count, today's goal status (Completed / Pending) and a one-tap jump back into today's activity, without opening the app
 - Scrolled vs. learned stats, compared against yesterday
 - Satisfying *“Today’s Goal Completed! 🎯”* moments that build the habit
 
@@ -189,6 +190,7 @@ You can install the app on any Android **7.0+** device directly from the reposit
 | **UI** | [Jetpack Compose](https://developer.android.com/jetpack/compose) & Material 3 (dark theme) |
 | **Language** | Kotlin 2.2 with Coroutines & Flow |
 | **Persistence** | [Room](https://developer.android.com/training/data-storage/room) + SQLite — pre-packaged, offline-first |
+| **Widgets** | [Jetpack Glance](https://developer.android.com/jetpack/androidx/releases/glance) — Streak & Goal Tracker home screen widget |
 | **Audio** | Android TextToSpeech engine |
 | **Build** | Gradle version catalogs · KSP · Secrets plugin |
 | **CI/CD** | GitHub Actions — build validation & automated APK releases |

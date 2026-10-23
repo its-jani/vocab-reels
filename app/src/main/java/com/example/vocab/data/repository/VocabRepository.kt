@@ -7,6 +7,7 @@ import com.example.vocab.data.local.VocabDao
 import com.example.vocab.data.model.UserLearningGoal
 import com.example.vocab.data.model.VocabCategories
 import com.example.vocab.data.model.VocabWord
+import com.example.vocab.widget.StreakWidgetRefresher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -185,6 +186,8 @@ class VocabRepository(
                 updatedAt = timestamp
             ) ?: com.example.vocab.data.model.DailyStats(date = today, reviewsScrolled = 0, wordsLearned = if (newStatus) 1 else 0, updatedAt = timestamp)
             vocabDao.insertOrUpdateDailyStats(updated)
+            // Real-time sync of the home screen Streak & Goal widget.
+            StreakWidgetRefresher.refreshAll(context)
         }
     }
 
@@ -212,6 +215,8 @@ class VocabRepository(
     suspend fun setDailyLearningGoal(goalCount: Int) {
         withContext(Dispatchers.IO) {
             vocabDao.setLearningGoal(UserLearningGoal(id = 1, dailyGoal = goalCount))
+            // Goal changes alter which past days count; resync the widget.
+            StreakWidgetRefresher.refreshAll(context)
         }
     }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    Home Screen Streak & Goal Tracker Widget (v1.3.4).
+
+    updatePeriodMillis = 1,800,000 (30 min, the system maximum) guarantees the
+    midnight zero-reset renders even if the app process is dead; real-time
+    updates are pushed by StreakWidgetRefresher whenever goal data changes.
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/widget_streak_description"
+    android:initialLayout="@layout/glance_default_loading_layout"
+    android:maxResizeHeight="400dp"
+    android:maxResizeWidth="400dp"
+    android:minHeight="110dp"
+    android:minWidth="250dp"
+    android:previewImage="@drawable/ic_vocab_logo"
+    android:resizeMode="horizontal|vertical"
+    android:targetCellWidth="3"
+    android:targetCellHeight="2"
+    android:updatePeriodMillis="1800000"
+    android:widgetCategory="home_screen" />
