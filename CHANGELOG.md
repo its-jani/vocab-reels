@@ -1,5 +1,27 @@
 # Release Notes
 
+## v1.3.5 — New Brand Logo & Resizable Streak Widget
+
+`versionCode` 8 → 9 · `versionName` 1.3.4 → 1.3.5
+
+### 🎨 New app icon (matches the website / README logo)
+
+- Replaced the legacy neon winged-book mark with the minimalist gradient
+  "reels-box" logo used by the site favicon and the top of the README.
+- Regenerated the full launcher set: adaptive-icon background (flat `#0a0a0b`),
+  foreground, a dedicated monochrome layer for themed icons (Android 13+), all
+  density mipmaps, the in-app / top-bar logo, the splash icon, and the widget
+  picker preview.
+
+### 📐 Resizable Streak & Goal widget
+
+- The widget now resizes freely (added `minResizeWidth`/`minResizeHeight`,
+  raised `maxResize` to 600dp) instead of being locked to one cell size.
+- Content is **size-aware**: on every resize the card reads its live `DpSize`
+  and scales the flame glyph, streak number, status pill, paddings and corner
+  radius together, and drops the hint row when the card is too short — so the
+  layout tracks the new size without overlapping or clipping.
+
 ## v1.3.4 — Home Screen Streak & Goal Tracker Widget
 
 `versionCode` 7 → 8 · `versionName` 1.3.3 → 1.3.4

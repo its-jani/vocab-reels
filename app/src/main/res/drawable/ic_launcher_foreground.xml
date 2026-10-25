@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive-icon foreground: the gradient reels-box mark. Rendered edge-to-edge
+     on the matching dark background so the launcher mask (circle/squircle) crops
+     the square corners while keeping the symbol inside the 66dp safe zone. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:width="72dp"
-        android:height="72dp"
+        android:width="108dp"
+        android:height="108dp"
         android:drawable="@drawable/ic_vocab_logo"
-        android:gravity="center" />
+        android:gravity="fill" />
 </layer-list>
-
