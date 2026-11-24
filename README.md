@@ -2,7 +2,7 @@
 
 <img src="docs/assets/favicon.svg" width="104" alt="VocabReels logo" />
 
-# 🎬 VocabReels
+# 🎬 VocabReels 
 
 **Swipe. Learn. Grow.** — master English vocabulary through an addictive, reels-style micro-learning experience.
 
